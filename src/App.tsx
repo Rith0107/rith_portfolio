@@ -1,8 +1,12 @@
+import ParticleBackground from './components/ParticleBackground'
+import Hero from './components/Hero'
+import './App.css'
+
 function App() {
   return (
     <main className="app">
-      <h1>Rithwik Lagishetty</h1>
-      <p>Portfolio — under construction.</p>
+      <ParticleBackground />
+      <Hero />
     </main>
   )
 }
