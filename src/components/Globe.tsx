@@ -138,13 +138,13 @@ export default function Globe({ activePinIndex }: GlobeProps) {
         new THREE.Quaternion().multiplyQuaternions(pitchQuat, yawQuat),
       )
 
-      const pinGeometry = new THREE.SphereGeometry(0.05, 12, 12)
+      const pinGeometry = new THREE.SphereGeometry(0.02, 12, 12)
       const pinMaterial = new THREE.MeshBasicMaterial({ color: 0x78aaff })
       const pin = new THREE.Mesh(pinGeometry, pinMaterial)
       pin.position.copy(position)
       globeGroup.add(pin)
 
-      const haloGeometry = new THREE.RingGeometry(0.07, 0.1, 24)
+      const haloGeometry = new THREE.RingGeometry(0.03, 0.044, 24)
       const haloMaterial = new THREE.MeshBasicMaterial({
         color: 0x78aaff,
         transparent: true,
@@ -192,7 +192,7 @@ export default function Globe({ activePinIndex }: GlobeProps) {
       pinMeshes.forEach((pin, index) => {
         const isActive = index === activePinIndexRef.current
         const pulse = isActive ? 1 + Math.sin(t * 0.08) * 0.25 : 1
-        pin.scale.setScalar(isActive ? 1.6 * pulse : 1)
+        pin.scale.setScalar(isActive ? 1.3 * pulse : 1)
         const material = pin.material as THREE.MeshBasicMaterial
         material.color.set(isActive ? 0xffffff : 0x78aaff)
       })
