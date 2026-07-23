@@ -33,6 +33,7 @@
   display: flex;
   align-items: center;
   gap: 3rem;
+  perspective: 1200px;
 }
 
 .card-stack {
@@ -45,6 +46,37 @@
 .globe-panel {
   flex: 1 1 320px;
   height: 420px;
+  opacity: 0;
+  offset-path: path('M 240 -70 C 110 -75, 25 -25, 0 0');
+  offset-anchor: 0 0;
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  transform: rotateY(-28deg) scale(0.82);
+}
+
+.experience.is-visible .globe-panel {
+  animation: globe-move 1.3s cubic-bezier(0.33, 0, 0.2, 1) forwards,
+    globe-orient 1.3s cubic-bezier(0.33, 0, 0.2, 1) forwards,
+    globe-fade 0.8s ease-out forwards;
+  animation-delay: 0.15s;
+}
+
+@keyframes globe-move {
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes globe-orient {
+  to {
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+@keyframes globe-fade {
+  to {
+    opacity: 1;
+  }
 }
 
 .stack-card {
@@ -171,5 +203,12 @@
   .experience,
   .stack-card {
     transition: none;
+  }
+
+  .globe-panel {
+    animation: none !important;
+    opacity: 1;
+    offset-distance: 100%;
+    transform: none;
   }
 }

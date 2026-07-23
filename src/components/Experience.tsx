@@ -48,6 +48,17 @@ const EXPERIENCE: ExperienceEntry[] = [
       'Worked with cross-functional teams to translate business requirements into implementable features, user stories, dashboards, and technical deliverables.',
     ],
   },
+  {
+    company: 'PerspectAI',
+    role: 'Technical and Inside Sales Intern',
+    location: 'Hyderabad, India',
+    period: 'July 2022 – October 2022',
+    pinIndex: 1,
+    bullets: [
+      'Conducted market research to identify target audiences and analyze current industry trends.',
+      'Collaborated across technical teams — testing, development, and design — gaining hands-on exposure to multiple parts of the product lifecycle.',
+    ],
+  },
 ]
 
 const FLY_DURATION_MS = 450
