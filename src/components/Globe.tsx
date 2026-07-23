@@ -117,10 +117,26 @@ export default function Globe({ activePinIndex }: GlobeProps) {
     })
     globeGroup.add(new THREE.Mesh(earthGeometry, earthMaterial))
 
-    const pinTargetAngles: number[] = []
+    const pinTargetQuaternions: THREE.Quaternion[] = []
     const pinMeshes: THREE.Mesh[] = PINS.map(({ lat, lon }) => {
       const position = latLongToVector3(lat, lon, RADIUS * 1.01)
-      pinTargetAngles.push(Math.atan2(-position.x, position.z))
+
+      // Decompose into pure yaw (longitude) + pitch (latitude) so the globe
+      // never rolls — north always stays pointing straight up on screen.
+      const rXZ = Math.hypot(position.x, position.z)
+      const yaw = Math.atan2(-position.x, position.z)
+      const pitch = Math.atan2(position.y, rXZ)
+      const yawQuat = new THREE.Quaternion().setFromAxisAngle(
+        new THREE.Vector3(0, 1, 0),
+        yaw,
+      )
+      const pitchQuat = new THREE.Quaternion().setFromAxisAngle(
+        new THREE.Vector3(1, 0, 0),
+        pitch,
+      )
+      pinTargetQuaternions.push(
+        new THREE.Quaternion().multiplyQuaternions(pitchQuat, yawQuat),
+      )
 
       const pinGeometry = new THREE.SphereGeometry(0.05, 12, 12)
       const pinMaterial = new THREE.MeshBasicMaterial({ color: 0x78aaff })
@@ -165,10 +181,13 @@ export default function Globe({ activePinIndex }: GlobeProps) {
         earthMaterial.uniforms.sunDirection.value = getSunDirection(new Date())
       }
 
-      const targetAngle = pinTargetAngles[activePinIndexRef.current] ?? 0
-      const current = globeGroup.rotation.y
-      const diff = ((targetAngle - current + Math.PI * 3) % (Math.PI * 2)) - Math.PI
-      globeGroup.rotation.y += prefersReducedMotion ? diff : diff * ROTATION_EASE
+      const targetQuaternion =
+        pinTargetQuaternions[activePinIndexRef.current] ?? globeGroup.quaternion
+      if (prefersReducedMotion) {
+        globeGroup.quaternion.copy(targetQuaternion)
+      } else {
+        globeGroup.quaternion.slerp(targetQuaternion, ROTATION_EASE)
+      }
 
       pinMeshes.forEach((pin, index) => {
         const isActive = index === activePinIndexRef.current
