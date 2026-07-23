@@ -9,6 +9,14 @@ interface Star {
   phase: number
   parallax: number
   isTwinkler: boolean
+  depthSpeed: number
+}
+
+interface Constellation {
+  stars: Star[]
+  lines: [Star, Star][]
+  centerY: number
+  depthSpeed: number
 }
 
 interface ShootingStar {
@@ -27,10 +35,11 @@ const CONSTELLATION_SPREAD = 130
 const SHOOTING_STAR_CHANCE = 0.006
 
 function makeStar(x: number, y: number, isTwinkler: boolean): Star {
+  const radius = Math.random() * 1.4 + 0.4
   return {
     x,
     y,
-    radius: Math.random() * 1.4 + 0.4,
+    radius,
     baseAlpha: isTwinkler
       ? Math.random() * 0.15 + 0.85
       : Math.random() * 0.3 + 0.35,
@@ -40,6 +49,7 @@ function makeStar(x: number, y: number, isTwinkler: boolean): Star {
     phase: Math.random() * Math.PI * 2,
     parallax: Math.random() * 14 + 3,
     isTwinkler,
+    depthSpeed: 0.08 + ((radius - 0.4) / 1.4) * 0.3 + Math.random() * 0.08,
   }
 }
 
@@ -59,7 +69,7 @@ export default function StarfieldBackground() {
     let width = 0
     let height = 0
     let stars: Star[] = []
-    let constellationLines: [Star, Star][] = []
+    let constellations: Constellation[] = []
     let shootingStars: ShootingStar[] = []
     const mouse = { x: 0, y: 0 }
     let hasPointer = false
@@ -79,7 +89,7 @@ export default function StarfieldBackground() {
       )
     }
 
-    function buildConstellation(): { points: Star[]; lines: [Star, Star][] } {
+    function buildConstellation(): Constellation {
       let cx = 0
       let cy = 0
       for (let attempt = 0; attempt < 20; attempt++) {
@@ -113,24 +123,23 @@ export default function StarfieldBackground() {
         current = next
       }
 
-      return { points, lines }
+      return {
+        stars: points,
+        lines,
+        centerY: cy,
+        depthSpeed: 0.12 + Math.random() * 0.2,
+      }
     }
 
     function initStars() {
       const ambientCount = STAR_COUNT - CONSTELLATION_COUNT * STARS_PER_CONSTELLATION
-      const ambientStars = Array.from({ length: ambientCount }, () =>
+      stars = Array.from({ length: ambientCount }, () =>
         makeStar(Math.random() * width, Math.random() * height, Math.random() < 0.22),
       )
 
-      constellationLines = []
-      const constellationStars: Star[] = []
-      for (let i = 0; i < CONSTELLATION_COUNT; i++) {
-        const { points, lines } = buildConstellation()
-        constellationStars.push(...points)
-        constellationLines.push(...lines)
-      }
-
-      stars = [...ambientStars, ...constellationStars]
+      constellations = Array.from({ length: CONSTELLATION_COUNT }, () =>
+        buildConstellation(),
+      )
     }
 
     function handlePointerMove(e: PointerEvent) {
@@ -172,6 +181,13 @@ export default function StarfieldBackground() {
       }
     }
 
+    function starAlpha(s: Star) {
+      const twinkle = Math.sin(t * s.twinkleSpeed + s.phase) * 0.5 + 0.5
+      return s.isTwinkler
+        ? s.baseAlpha * (0.08 + 0.92 * twinkle)
+        : s.baseAlpha * (0.75 + 0.25 * twinkle)
+    }
+
     function draw() {
       if (!ctx) return
       t += 1
@@ -179,27 +195,44 @@ export default function StarfieldBackground() {
 
       const px = hasPointer ? mouse.x : 0
       const py = hasPointer ? mouse.y : 0
+      const scrollY = window.scrollY
 
-      for (const [a, b] of constellationLines) {
-        ctx.strokeStyle = 'rgba(170, 200, 255, 0.14)'
-        ctx.lineWidth = 1
-        ctx.beginPath()
-        ctx.moveTo(a.x + px * a.parallax, a.y + py * a.parallax)
-        ctx.lineTo(b.x + px * b.parallax, b.y + py * b.parallax)
-        ctx.stroke()
+      for (const c of constellations) {
+        const wrappedCenterY =
+          (((c.centerY - scrollY * c.depthSpeed) % height) + height) % height
+        const shift = wrappedCenterY - c.centerY
+
+        for (const [a, b] of c.lines) {
+          ctx.strokeStyle = 'rgba(170, 200, 255, 0.14)'
+          ctx.lineWidth = 1
+          ctx.beginPath()
+          ctx.moveTo(a.x + px * a.parallax, a.y + shift + py * a.parallax)
+          ctx.lineTo(b.x + px * b.parallax, b.y + shift + py * b.parallax)
+          ctx.stroke()
+        }
+
+        for (const s of c.stars) {
+          ctx.beginPath()
+          ctx.fillStyle = `rgba(226, 235, 255, ${starAlpha(s)})`
+          ctx.arc(
+            s.x + px * s.parallax,
+            s.y + shift + py * s.parallax,
+            s.radius,
+            0,
+            Math.PI * 2,
+          )
+          ctx.fill()
+        }
       }
 
       for (const s of stars) {
-        const twinkle = Math.sin(t * s.twinkleSpeed + s.phase) * 0.5 + 0.5
-        const alpha = s.isTwinkler
-          ? s.baseAlpha * (0.08 + 0.92 * twinkle)
-          : s.baseAlpha * (0.75 + 0.25 * twinkle)
         const dx = px * s.parallax
         const dy = py * s.parallax
+        const wrappedY = (((s.y - scrollY * s.depthSpeed) % height) + height) % height
 
         ctx.beginPath()
-        ctx.fillStyle = `rgba(226, 235, 255, ${alpha})`
-        ctx.arc(s.x + dx, s.y + dy, s.radius, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(226, 235, 255, ${starAlpha(s)})`
+        ctx.arc(s.x + dx, wrappedY + dy, s.radius, 0, Math.PI * 2)
         ctx.fill()
       }
 
