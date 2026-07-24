@@ -17,7 +17,6 @@ interface StarPosition {
   y: number
 }
 
-const GOLDEN_ANGLE = 137.508 * (Math.PI / 180)
 const CLOSE_TRANSITION_MS = 350
 
 // A stylized outline of Pisces — a small triangular loop for one fish, a
