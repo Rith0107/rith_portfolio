@@ -1,0 +1,132 @@
+.case-study {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-6) var(--space-9);
+}
+
+.case-back {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+  transition: color 0.15s ease;
+}
+
+.case-back:hover {
+  color: var(--color-text);
+}
+
+.case-header {
+  margin-bottom: var(--space-7);
+}
+
+.case-meta {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.case-header h1 {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.case-oneliner {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.case-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.case-overview {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.case-body section h2 {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.case-body section p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.case-body section ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.case-body section li {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.case-outcome li {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.case-retrospective {
+  margin: 0;
+  padding: var(--space-5) 0 var(--space-5) var(--space-5);
+  border-left: 2px solid var(--color-border-strong);
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.case-next {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-9);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  transition: opacity 0.15s ease;
+}
+
+.case-next:hover {
+  opacity: 0.6;
+}
+
+.case-next-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.case-next-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.case-not-found {
+  padding: var(--space-9) var(--space-6);
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 600px) {
+  .case-study {
+    padding: var(--space-6) var(--space-4) var(--space-8);
+  }
+}

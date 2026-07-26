@@ -1,0 +1,128 @@
+.home {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.hero {
+  padding: var(--space-9) 0 var(--space-8);
+  max-width: var(--content-width);
+}
+
+.hero-eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.hero-name {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.hero-tagline {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-5);
+  max-width: 560px;
+}
+
+.hero-links {
+  display: flex;
+  gap: var(--space-5);
+}
+
+.hero-links a {
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-border-strong);
+  padding-bottom: 2px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.hero-links a:hover {
+  color: var(--color-text-secondary);
+  border-color: var(--color-text-secondary);
+}
+
+.work-section {
+  padding-bottom: var(--space-8);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-7);
+}
+
+.work-section-title {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+}
+
+.work-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.work-row {
+  display: block;
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border);
+  transition: opacity 0.15s ease;
+}
+
+.work-list li:first-child .work-row {
+  border-top: 1px solid var(--color-border);
+}
+
+.work-row:hover {
+  opacity: 0.6;
+}
+
+.work-row-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.work-row-heading h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.work-row-period {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.work-row-role {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.work-row-oneliner {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-top: var(--space-3);
+  max-width: 640px;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .home {
+    padding: 0 var(--space-4);
+  }
+
+  .hero {
+    padding: var(--space-7) 0 var(--space-6);
+  }
+}

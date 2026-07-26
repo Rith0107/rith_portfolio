@@ -1,0 +1,115 @@
+.info {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6) var(--space-9);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.info-section h1 {
+  font-size: clamp(1.9rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-5);
+}
+
+.info-section h2 {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+}
+
+.info-section p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.info-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.info-list-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.info-list-heading h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.info-list-heading span {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.info-list p {
+  margin-top: var(--space-1);
+}
+
+.info-list-detail {
+  color: var(--color-text-muted) !important;
+  font-size: 0.9rem !important;
+}
+
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.skills-group h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+}
+
+.skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.skill-tag {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  color: var(--color-text-secondary);
+}
+
+.info-contact {
+  display: flex;
+  gap: var(--space-5);
+}
+
+.info-contact a {
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-border-strong);
+  padding-bottom: 2px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.info-contact a:hover {
+  color: var(--color-text-secondary);
+  border-color: var(--color-text-secondary);
+}
+
+@media (max-width: 600px) {
+  .info {
+    padding: var(--space-6) var(--space-4) var(--space-8);
+  }
+}
