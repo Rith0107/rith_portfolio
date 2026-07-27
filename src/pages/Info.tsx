@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import { workEntries } from '../data/workEntries'
 import './Info.css'
 
 const SKILLS: { category: string; items: string[] }[] = [
@@ -52,10 +54,21 @@ const EDUCATION = [
   },
 ]
 
+function Overline({ children }: { children: string }) {
+  return (
+    <div className="info-overline">
+      <span className="info-overline-dot" />
+      <span className="info-overline-text">{children}</span>
+    </div>
+  )
+}
+
 export default function Info() {
+  const experience = workEntries.filter((entry) => entry.category === 'experience')
+
   return (
     <main className="info">
-      <section className="info-section">
+      <section className="info-section info-about">
         <h1>About</h1>
         <p>
           I'm a software engineer currently at FIS, modernizing a legacy
@@ -69,7 +82,27 @@ export default function Info() {
       </section>
 
       <section className="info-section">
-        <h2>Education</h2>
+        <Overline>Experience</Overline>
+        <div className="experience-list">
+          {experience.map((entry) => (
+            <Link key={entry.slug} to={`/work/${entry.slug}`} className="experience-row">
+              <div className="experience-company">{entry.title}</div>
+              <div className="experience-details">
+                <div className="experience-title-date">
+                  <h3>{entry.role}</h3>
+                  <span className="experience-meta">
+                    {entry.location} · {entry.period}
+                  </span>
+                </div>
+                <p className="experience-body">{entry.oneLiner}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="info-section">
+        <Overline>Education</Overline>
         <ul className="info-list">
           {EDUCATION.map((item) => (
             <li key={item.school}>
@@ -85,7 +118,7 @@ export default function Info() {
       </section>
 
       <section className="info-section">
-        <h2>Skills</h2>
+        <Overline>Skills</Overline>
         <div className="skills-grid">
           {SKILLS.map((group) => (
             <div key={group.category} className="skills-group">
@@ -103,7 +136,7 @@ export default function Info() {
       </section>
 
       <section className="info-section">
-        <h2>Contact</h2>
+        <Overline>Contact</Overline>
         <div className="info-contact">
           <a href="https://github.com/Rith0107" target="_blank" rel="noreferrer">
             GitHub

@@ -5,7 +5,6 @@ import Reveal from '../components/Reveal'
 import './Home.css'
 
 export default function Home() {
-  const experience = workEntries.filter((entry) => entry.category === 'experience')
   const projects = workEntries.filter((entry) => entry.category === 'project')
 
   return (
@@ -35,22 +34,6 @@ export default function Home() {
       </section>
 
       <section className="work-section">
-        <Reveal>
-          <h2 className="work-section-title">Experience</h2>
-        </Reveal>
-        <div className="work-grid">
-          {experience.map((entry, index) => (
-            <Reveal key={entry.slug} delayMs={index * 80}>
-              <WorkCard entry={entry} />
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className="work-section">
-        <Reveal>
-          <h2 className="work-section-title">Projects</h2>
-        </Reveal>
         <div className="work-grid">
           {projects.map((entry, index) => (
             <Reveal key={entry.slug} delayMs={index * 80}>
