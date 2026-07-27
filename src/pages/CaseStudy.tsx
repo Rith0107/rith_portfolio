@@ -1,5 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import { workEntries, getWorkEntry } from '../data/workEntries'
+import WindowFrame from '../components/WindowFrame'
+import Reveal from '../components/Reveal'
 import './CaseStudy.css'
 
 export default function CaseStudy() {
@@ -32,6 +34,19 @@ export default function CaseStudy() {
         <h1>{entry.title}</h1>
         <p className="case-oneliner">{entry.oneLiner}</p>
       </header>
+
+      <Reveal>
+        <WindowFrame className="case-visual">
+          <div
+            className="case-visual-inner"
+            style={{
+              background: `linear-gradient(135deg, ${entry.accent}40 0%, ${entry.accent}12 60%, transparent 100%)`,
+            }}
+          >
+            <span className="case-visual-dot" style={{ background: entry.accent }} />
+          </div>
+        </WindowFrame>
+      </Reveal>
 
       <div className="case-body">
         <p className="case-overview">{entry.overview}</p>

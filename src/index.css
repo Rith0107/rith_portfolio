@@ -1,13 +1,18 @@
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
-  --color-bg: #ffffff;
-  --color-text: #111111;
-  --color-text-secondary: #5c5c5c;
-  --color-text-muted: #9a9a9a;
-  --color-border: #e6e6e6;
-  --color-border-strong: #d0d0d0;
+  --color-bg: #0a0a0b;
+  --color-bg-elevated: #141416;
+  --color-bg-elevated-2: #1c1c1f;
+  --color-text: #f2f2f3;
+  --color-text-secondary: #a3a3a8;
+  --color-text-muted: #6b6b70;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.18);
+
+  --shadow-window: 0 30px 60px -20px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -21,6 +26,8 @@
 
   --content-width: 720px;
   --page-width: 1100px;
+  --radius-lg: 20px;
+  --radius-md: 12px;
 }
 
 * {
@@ -45,4 +52,33 @@ h2,
 h3,
 p {
   margin: 0;
+}
+
+.gradient-text {
+  background: linear-gradient(
+    120deg,
+    #ffffff 0%,
+    #9a9aa2 35%,
+    #ffffff 55%,
+    #9a9aa2 75%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-style: italic;
+  animation: gradient-shimmer 6s linear infinite;
+}
+
+@keyframes gradient-shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-text {
+    animation: none;
+  }
 }

@@ -39,6 +39,29 @@
   color: var(--color-text-secondary);
 }
 
+.case-visual {
+  margin-bottom: var(--space-7);
+}
+
+.case-visual .window-frame-body {
+  padding: 0;
+}
+
+.case-visual-inner {
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-visual-dot {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.85;
+}
+
 .case-body {
   display: flex;
   flex-direction: column;

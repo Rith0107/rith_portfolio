@@ -5,6 +5,7 @@ export interface WorkEntry {
   period: string
   location: string
   category: 'experience' | 'project'
+  accent: string
   oneLiner: string
   overview: string
   context?: string
@@ -22,6 +23,7 @@ export const workEntries: WorkEntry[] = [
     period: 'June 2025 – December 2025',
     location: 'Atlanta, USA',
     category: 'experience',
+    accent: '#5b8cff',
     oneLiner:
       'Cut manual compliance review time by 90%+ with an AI-powered anomaly detection pipeline.',
     overview:
@@ -54,6 +56,7 @@ export const workEntries: WorkEntry[] = [
     period: 'January 2026 – Present',
     location: 'Atlanta, USA',
     category: 'experience',
+    accent: '#6f6bff',
     oneLiner:
       'Modernizing a legacy Cards platform from COBOL to Java for a major financial services enterprise.',
     overview:
@@ -71,6 +74,7 @@ export const workEntries: WorkEntry[] = [
     period: 'February 2023 – October 2023',
     location: 'Hyderabad, India',
     category: 'experience',
+    accent: '#3ecf8e',
     oneLiner:
       'Built an internal PowerApps tool that streamlined assignment tracking across teams.',
     overview:
@@ -87,6 +91,7 @@ export const workEntries: WorkEntry[] = [
     period: 'July 2022 – October 2022',
     location: 'Hyderabad, India',
     category: 'experience',
+    accent: '#ffb03b',
     oneLiner:
       'Conducted market research and cross-functional product work as an early-career technical/sales hybrid role.',
     overview:
@@ -99,10 +104,11 @@ export const workEntries: WorkEntry[] = [
   {
     slug: 'disaster-recognition',
     title: 'Disaster Recognition from Aerial Images',
-    role: 'Academic Project · NJIT',
+    role: 'Academic Project',
     period: 'January 2025 – May 2025',
     location: 'NJIT',
     category: 'project',
+    accent: '#ff6b6b',
     oneLiner:
       'A MobileNetV2-based computer vision pipeline for classifying disaster imagery from aerial photos.',
     overview:
@@ -114,10 +120,11 @@ export const workEntries: WorkEntry[] = [
   {
     slug: 'used-cars-price-prediction',
     title: 'Used Cars Price Prediction',
-    role: 'Academic Project · NJIT',
+    role: 'Academic Project',
     period: 'August 2024 – December 2024',
     location: 'NJIT',
     category: 'project',
+    accent: '#ffd23f',
     oneLiner:
       'An end-to-end ML pipeline predicting used car prices with SHAP-based interpretability.',
     overview:
@@ -129,10 +136,11 @@ export const workEntries: WorkEntry[] = [
   {
     slug: 'ad-maker',
     title: 'AD MAKER',
-    role: 'Undergraduate Research Project · Mahindra University',
+    role: 'Undergraduate Research Project',
     period: 'January 2022 – December 2022',
     location: 'Mahindra University',
     category: 'project',
+    accent: '#ff8bd1',
     oneLiner:
       'An ad-concept generation system combining GPT-3, ConceptNet, and emotion-aware NLP.',
     overview:
