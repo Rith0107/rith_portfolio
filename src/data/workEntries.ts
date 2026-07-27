@@ -6,6 +6,8 @@ export interface WorkEntry {
   location: string
   category: 'experience' | 'project'
   accent: string
+  logo?: string
+  logoWithTitle?: boolean
   oneLiner: string
   overview: string
   context?: string
@@ -24,6 +26,7 @@ export const workEntries: WorkEntry[] = [
     location: 'Atlanta, USA',
     category: 'experience',
     accent: '#6f6bff',
+    logo: '/logos/fis.png',
     oneLiner:
       'Modernizing a legacy Cards platform from COBOL to Java for a major financial services enterprise.',
     overview:
@@ -56,6 +59,7 @@ export const workEntries: WorkEntry[] = [
     location: 'Atlanta, USA',
     category: 'experience',
     accent: '#5b8cff',
+    logo: '/logos/global-payments.png',
     oneLiner:
       'Cut manual compliance review time by 90%+ with an AI-powered anomaly detection pipeline.',
     overview:
@@ -89,6 +93,7 @@ export const workEntries: WorkEntry[] = [
     location: 'Hyderabad, India',
     category: 'experience',
     accent: '#3ecf8e',
+    logo: '/logos/cognida-ai.png',
     oneLiner:
       'Built an internal PowerApps tool that streamlined assignment tracking across teams.',
     overview:
@@ -120,6 +125,8 @@ export const workEntries: WorkEntry[] = [
     location: 'Hyderabad, India',
     category: 'experience',
     accent: '#ffb03b',
+    logo: '/logos/perspectai.png',
+    logoWithTitle: true,
     oneLiner:
       'Conducted market research and cross-functional product work as an early-career technical/sales hybrid role.',
     overview:

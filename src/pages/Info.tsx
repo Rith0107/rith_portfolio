@@ -63,6 +63,14 @@ function Overline({ children }: { children: string }) {
   )
 }
 
+function PinIcon() {
+  return (
+    <svg className="pin-icon" viewBox="0 0 24 24" fill="currentColor" fillRule="evenodd">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 4.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" />
+    </svg>
+  )
+}
+
 export default function Info() {
   const experience = workEntries.filter((entry) => entry.category === 'experience')
 
@@ -86,13 +94,30 @@ export default function Info() {
         <div className="experience-list">
           {experience.map((entry) => (
             <Link key={entry.slug} to={`/work/${entry.slug}`} className="experience-row">
-              <div className="experience-company">{entry.title}</div>
+              <div className="experience-company-block">
+                <div className="experience-company">
+                  {entry.logo ? (
+                    entry.logoWithTitle ? (
+                      <>
+                        {entry.title}
+                        <img src={entry.logo} alt="" className="experience-logo experience-logo-inline" />
+                      </>
+                    ) : (
+                      <img src={entry.logo} alt={entry.title} className="experience-logo" />
+                    )
+                  ) : (
+                    entry.title
+                  )}
+                </div>
+                <span className="experience-location">
+                  <PinIcon />
+                  {entry.location}
+                </span>
+              </div>
               <div className="experience-details">
                 <div className="experience-title-date">
                   <h3>{entry.role}</h3>
-                  <span className="experience-meta">
-                    {entry.location} · {entry.period}
-                  </span>
+                  <span className="experience-meta">{entry.period}</span>
                 </div>
                 <p className="experience-body">{entry.oneLiner}</p>
               </div>
