@@ -61,6 +61,12 @@
   background: var(--color-bg-elevated-2);
 }
 
+.nav-external {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
 .nav-external a {
   font-size: 0.9rem;
   color: var(--color-text-secondary);
@@ -78,6 +84,7 @@
 
 @media (max-width: 600px) {
   .nav-inner {
+    flex-wrap: wrap;
     padding: var(--space-3) var(--space-4);
     gap: var(--space-2);
   }
@@ -93,6 +100,13 @@
   .nav-pill-link {
     padding: 6px 10px;
     font-size: 0.82rem;
+  }
+
+  .nav-external {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: flex-end;
+    gap: var(--space-4);
   }
 
   .nav-external a {

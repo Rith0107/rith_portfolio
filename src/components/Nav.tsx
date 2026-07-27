@@ -27,6 +27,9 @@ export default function Nav() {
         </nav>
 
         <div className="nav-external">
+          <a href="/resume.pdf" target="_blank" rel="noreferrer">
+            Resume <span className="nav-external-arrow">↗</span>
+          </a>
           <a
             href="https://linkedin.com/in/rithwik-lagishetty"
             target="_blank"
