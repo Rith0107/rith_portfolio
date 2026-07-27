@@ -1,7 +1,11 @@
+import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import ResumeModal from './ResumeModal'
 import './Nav.css'
 
 export default function Nav() {
+  const [resumeOpen, setResumeOpen] = useState(false)
+
   return (
     <header className="nav">
       <div className="nav-inner">
@@ -27,9 +31,9 @@ export default function Nav() {
         </nav>
 
         <div className="nav-external">
-          <a href="/resume.pdf" target="_blank" rel="noreferrer">
+          <button type="button" className="nav-external-button" onClick={() => setResumeOpen(true)}>
             Resume <span className="nav-external-arrow">↗</span>
-          </a>
+          </button>
           <a
             href="https://linkedin.com/in/rithwik-lagishetty"
             target="_blank"
@@ -39,6 +43,8 @@ export default function Nav() {
           </a>
         </div>
       </div>
+
+      {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
     </header>
   )
 }

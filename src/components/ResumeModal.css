@@ -1,0 +1,114 @@
+.resume-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.resume-modal {
+  width: 100%;
+  max-width: 720px;
+  height: min(85vh, 900px);
+}
+
+.resume-modal-frame {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.resume-modal-frame .window-frame-body {
+  padding: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.resume-modal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.resume-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.resume-modal-actions a,
+.resume-modal-actions button {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.15s ease;
+}
+
+.resume-modal-actions a:hover,
+.resume-modal-actions button:hover {
+  color: var(--color-text);
+}
+
+.resume-modal-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: #52525b;
+  padding: var(--space-5);
+}
+
+.resume-modal-pages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.resume-modal-page {
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.resume-modal-status {
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  padding: var(--space-7) 0;
+}
+
+.resume-modal-status a {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .resume-modal-overlay {
+    padding: var(--space-3);
+  }
+
+  .resume-modal {
+    height: min(88vh, 900px);
+  }
+
+  .resume-modal-bar span {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
