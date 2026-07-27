@@ -109,7 +109,7 @@ export default function Info() {
             GitHub
           </a>
           <a
-            href="https://linkedin.com/in/rithwik-lagishetty"
+            href="https://www.linkedin.com/in/rithwik-lagishetty/"
             target="_blank"
             rel="noreferrer"
           >

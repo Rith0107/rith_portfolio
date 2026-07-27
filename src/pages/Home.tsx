@@ -26,7 +26,7 @@ export default function Home() {
             <a href="https://github.com/Rith0107" target="_blank" rel="noreferrer">
               GitHub ↗
             </a>
-            <a href="https://linkedin.com/in/rithwik-lagishetty" target="_blank" rel="noreferrer">
+            <a href="https://www.linkedin.com/in/rithwik-lagishetty/" target="_blank" rel="noreferrer">
               LinkedIn ↗
             </a>
             <a href="mailto:rithwik.lagishetty@gmail.com">Email ↗</a>

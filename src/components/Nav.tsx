@@ -35,7 +35,7 @@ export default function Nav() {
             Resume <span className="nav-external-arrow">↗</span>
           </button>
           <a
-            href="https://linkedin.com/in/rithwik-lagishetty"
+            href="https://www.linkedin.com/in/rithwik-lagishetty/"
             target="_blank"
             rel="noreferrer"
           >
