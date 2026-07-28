@@ -43,6 +43,7 @@ interface EducationEntry {
   school: string
   subtitle?: string
   logo: string
+  location: string
   degree: string
   period: string
   detail: string
@@ -53,6 +54,7 @@ const EDUCATION: EducationEntry[] = [
     school: 'New Jersey Institute of Technology',
     subtitle: '(NJIT)',
     logo: '/logos/njit.png',
+    location: 'Newark, NJ, USA',
     degree: 'Master of Science in Computer Science',
     period: 'December 2025',
     detail: 'GPA: 4.0/4.0',
@@ -61,6 +63,7 @@ const EDUCATION: EducationEntry[] = [
     school: 'Mahindra University',
     subtitle: 'Formerly Mahindra École Centrale',
     logo: '/logos/mahindra.png',
+    location: 'Hyderabad, India',
     degree: 'Bachelor of Technology in Computer Science and Engineering',
     period: 'August 2023',
     detail: 'GPA: 8.6/10',
@@ -144,9 +147,15 @@ export default function Info() {
         <div className="edu-cards">
           {EDUCATION.map((item) => (
             <div key={item.school} className="edu-card">
-              <img src={item.logo} alt={item.school} className="edu-card-logo" />
+              <span className="edu-card-logo-wrap">
+                <img src={item.logo} alt={item.school} className="edu-card-logo" />
+              </span>
               <h3 className="edu-card-name">{item.school}</h3>
               {item.subtitle && <p className="edu-card-subtitle">{item.subtitle}</p>}
+              <span className="experience-location">
+                <PinIcon />
+                {item.location}
+              </span>
               <p className="edu-card-degree">{item.degree}</p>
               <p className="edu-card-detail">{item.detail}</p>
               <p className="edu-card-detail">Graduated in {item.period}</p>
