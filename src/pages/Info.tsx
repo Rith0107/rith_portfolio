@@ -132,10 +132,23 @@ export default function Info() {
                 </span>
               </div>
               <div className="experience-details">
-                <div className="experience-title-date">
-                  <h3>{entry.role}</h3>
-                  <span className="experience-meta">{entry.period}</span>
-                </div>
+                {entry.roles ? (
+                  <div className="role-timeline">
+                    {entry.roles.map((r) => (
+                      <div key={r.title} className="role-timeline-item">
+                        <div className="experience-title-date">
+                          <h3>{r.title}</h3>
+                          <span className="experience-meta">{r.period}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="experience-title-date">
+                    <h3>{entry.role}</h3>
+                    <span className="experience-meta">{entry.period}</span>
+                  </div>
+                )}
                 <p className="experience-body">{entry.oneLiner}</p>
               </div>
             </Link>

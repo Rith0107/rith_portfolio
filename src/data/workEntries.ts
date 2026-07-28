@@ -3,6 +3,7 @@ export interface WorkEntry {
   title: string
   role: string
   period: string
+  roles?: { title: string; period: string }[]
   location: string
   category: 'experience' | 'project'
   accent: string
@@ -88,8 +89,12 @@ export const workEntries: WorkEntry[] = [
   {
     slug: 'cognida-ai',
     title: 'Cognida.ai',
-    role: 'Software Developer / Software Developer Intern',
+    role: 'Software Developer',
     period: 'February 2023 – October 2023',
+    roles: [
+      { title: 'Software Developer', period: 'August 2023 – October 2023' },
+      { title: 'Software Developer Intern', period: 'February 2023 – July 2023' },
+    ],
     location: 'Hyderabad, India',
     category: 'experience',
     accent: '#3ecf8e',
