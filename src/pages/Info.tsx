@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { workEntries } from '../data/workEntries'
+import WindowFrame from '../components/WindowFrame'
 import './Info.css'
 
 const SKILLS: { category: string; items: string[] }[] = [
@@ -166,20 +167,25 @@ export default function Info() {
 
       <section className="info-section">
         <Overline>Skills</Overline>
-        <div className="skills-grid">
-          {SKILLS.map((group) => (
-            <div key={group.category} className="skills-group">
-              <h3>{group.category}</h3>
-              <div className="skills-tags">
-                {group.items.map((skill) => (
-                  <span key={skill} className="skill-tag">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
+        <WindowFrame className="skills-terminal">
+          <p className="skills-terminal-prompt">
+            <span className="skills-terminal-prefix">$</span> cat skills.json
+          </p>
+          <p className="skills-terminal-brace">{'{'}</p>
+          {SKILLS.map((group, index) => (
+            <p key={group.category} className="skills-terminal-json-line">
+              <span className="skills-terminal-key">
+                "{group.category.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')}"
+              </span>
+              <span className="skills-terminal-punct">: [</span>
+              <span className="skills-terminal-items">
+                {group.items.map((item) => `"${item}"`).join(', ')}
+              </span>
+              <span className="skills-terminal-punct">]{index < SKILLS.length - 1 ? ',' : ''}</span>
+            </p>
           ))}
-        </div>
+          <p className="skills-terminal-brace">{'}'}</p>
+        </WindowFrame>
       </section>
 
       <section className="info-section">

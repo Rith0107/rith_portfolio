@@ -207,30 +207,44 @@ p.experience-body {
   }
 }
 
-.skills-grid {
+.skills-terminal .window-frame-body {
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-3);
 }
 
-.skills-group h3 {
+.skills-terminal-prompt {
   font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: var(--space-3);
+  color: var(--color-text);
+  margin: 0 0 var(--space-3);
 }
 
-.skills-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
+.skills-terminal-prefix {
+  color: rgba(242, 242, 243, 0.4);
+  margin-right: var(--space-2);
 }
 
-.skill-tag {
+.skills-terminal-brace {
+  font-size: 0.9rem;
+  color: rgba(242, 242, 243, 0.4);
+  margin: 0;
+}
+
+.skills-terminal-json-line {
   font-size: 0.85rem;
-  padding: 0.3rem 0.7rem;
-  border: 1px solid var(--color-border-strong);
-  border-radius: 999px;
-  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin: 0;
+  padding-left: 1.4em;
+}
+
+.skills-terminal-key,
+.skills-terminal-punct {
+  color: rgba(242, 242, 243, 0.4);
+}
+
+.skills-terminal-items {
+  color: rgba(242, 242, 243, 0.85);
 }
 
 .info-contact {
