@@ -39,16 +39,29 @@ const SKILLS: { category: string; items: string[] }[] = [
   },
 ]
 
-const EDUCATION = [
+interface EducationEntry {
+  school: string
+  subtitle?: string
+  logo: string
+  degree: string
+  period: string
+  detail: string
+}
+
+const EDUCATION: EducationEntry[] = [
   {
-    school: 'New Jersey Institute of Technology (NJIT)',
-    degree: 'M.S. in Computer Science',
+    school: 'New Jersey Institute of Technology',
+    subtitle: '(NJIT)',
+    logo: '/logos/njit.png',
+    degree: 'Master of Science in Computer Science',
     period: 'December 2025',
     detail: 'GPA: 4.0/4.0',
   },
   {
-    school: 'Mahindra Ecole Centrale',
-    degree: 'B.Tech in Computer Science and Engineering',
+    school: 'Mahindra University',
+    subtitle: 'Formerly Mahindra École Centrale',
+    logo: '/logos/mahindra.png',
+    degree: 'Bachelor of Technology in Computer Science and Engineering',
     period: 'August 2023',
     detail: 'GPA: 8.6/10',
   },
@@ -128,18 +141,18 @@ export default function Info() {
 
       <section className="info-section">
         <Overline>Education</Overline>
-        <ul className="info-list">
+        <div className="edu-cards">
           {EDUCATION.map((item) => (
-            <li key={item.school}>
-              <div className="info-list-heading">
-                <h3>{item.school}</h3>
-                <span>{item.period}</span>
-              </div>
-              <p>{item.degree}</p>
-              <p className="info-list-detail">{item.detail}</p>
-            </li>
+            <div key={item.school} className="edu-card">
+              <img src={item.logo} alt={item.school} className="edu-card-logo" />
+              <h3 className="edu-card-name">{item.school}</h3>
+              {item.subtitle && <p className="edu-card-subtitle">{item.subtitle}</p>}
+              <p className="edu-card-degree">{item.degree}</p>
+              <p className="edu-card-detail">{item.detail}</p>
+              <p className="edu-card-detail">Graduated in {item.period}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       </section>
 
       <section className="info-section">

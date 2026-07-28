@@ -46,43 +46,6 @@
   max-width: 640px;
 }
 
-.info-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
-}
-
-.info-list-heading {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
-
-.info-list-heading h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.info-list-heading span {
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
-  white-space: nowrap;
-}
-
-.info-list p {
-  margin-top: var(--space-1);
-}
-
-.info-list-detail {
-  color: var(--color-text-muted) !important;
-  font-size: 0.9rem !important;
-}
-
 .experience-list {
   display: flex;
   flex-direction: column;
@@ -101,6 +64,56 @@
 
 .experience-row:hover {
   background: var(--color-bg-elevated);
+}
+
+.edu-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-5);
+}
+
+.edu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+  padding: var(--space-7) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-elevated);
+}
+
+.edu-card-logo {
+  height: clamp(110px, 14vw, 160px);
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  margin-bottom: var(--space-2);
+}
+
+.edu-card-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.edu-card-subtitle {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: -2px;
+}
+
+.edu-card-degree {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.edu-card-detail {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
 }
 
 .experience-company-block {
