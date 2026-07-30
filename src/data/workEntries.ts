@@ -222,26 +222,32 @@ export const workEntries: WorkEntry[] = [
     category: 'project',
     accent: '#ff8bd1',
     oneLiner:
-      'An ad-concept generation system combining GPT-3, ConceptNet, and emotion-aware NLP.',
+      'A four-person team project turning a product and an emotion into a usable ad concept, combining ConceptNet, emotion-aware filtering, and GPT-3.',
     overview:
-      'Built an interactive ad-generation system that uses GPT-3, ConceptNet, and NRCLex to generate ad concepts given a product type and emotional tone.',
+      'Ad-Maker is a fourth-year team project (with D Maneesh Reddy, T Pranav Kumar Reddy, and Sree Deepya B, under Dr. Sunny Rai) that generates advertisement concepts from just a product and a target emotion. It expands the product into related concepts with ConceptNet, filters them by emotional relevance, and feeds the result to GPT-3 to produce a short, usable ad story.',
     context:
-      'Generic ad-copy generators typically ignore emotional tone, producing content that is technically on-topic but doesn’t resonate with the audience it’s meant for.',
+      'Coming up with an ad concept that actually connects with an audience usually starts from a blank page. We wanted to test whether pairing a semantic knowledge graph with a language model could reliably produce a usable starting point from nothing more than a product name and an emotional tone.',
     problem: [
-      'Ad concepts needed to match not just a product category, but a specific target emotion.',
-      'Raw generative output from GPT-3 needed grounding — plausible-sounding but irrelevant concepts had to be filtered out before they reached a user.',
-      'Large ad datasets used for training and evaluation had no existing emotion labels to build on.',
+      'Ad ideation is open-ended — a bare product name has to be turned into a concrete, emotionally-targeted concept before it can even be evaluated.',
+      'GPT-3 run directly on a product name tends toward generic output, since the model has no signal for the tone the ad should carry.',
+      'The large ad dataset we validated against had no existing emotion labels to build on, so it couldn’t be used for emotion filtering as-is.',
+      'Any generated concept had to be screened for profanity and offensive language before it could reach a user.',
     ],
     process: [
-      'Combined GPT-3 for generation with ConceptNet for semantic grounding of ad concepts.',
-      'Used NRCLex for emotion-aware tagging so generated concepts could be filtered and ranked by target emotional tone.',
-      'Built NLP pipelines to tag, semantically filter, and rank large ad datasets to improve the relevance of final outputs.',
+      'Reviewed prior computational-creativity work — analogical-reasoning tools like the Retriever, metaphor generation for pictorial ads, and explainable computational creativity — to ground the approach before building anything.',
+      'Used conceptnet-lite to expand the product into related concepts via relations like used_for, is_a, part_of, and synonym, then scored each candidate against the user’s chosen emotion with NRCLex, which covers 10 emotions versus the 5 offered by text2emotion, the library we tried first.',
+      'Built NLP pipelines to tag, semantically filter, and rank the large ad dataset itself, so it could be used both to emotion-label reference ads and to validate generated concepts against real creative direction.',
+      'Passed the emotion-filtered concepts, the product, and the target emotion to a few-shot GPT-3 (Da Vinci) model trained on summarized real advertisements, falling back to an unfiltered GPT-3 pass when the emotion filter returned nothing.',
+      'Ran every generated output through a profanity-check classifier — a linear SVM trained on 200k labeled samples — before it reached the user.',
+      'Tried cosine similarity as an additional filtering step, then dropped it: it was slow to compute and didn’t make the surviving concepts any more novel, so it added cost without improving results.',
     ],
     outcome: [
-      'Designed NLP pipelines for large ad datasets, including emotion tagging, semantic filtering, and content ranking to improve relevance of generated ads.',
+      'Designed NLP pipelines for the large ad dataset, including emotion tagging, semantic filtering, and content ranking, to improve the relevance of generated ads.',
+      'Validated the system against that curated dataset of real commercial ads (objective, emotional tone, and description per ad) and found the generated concepts nearly matched the dataset’s actual creative direction.',
+      'The system occasionally surfaced words and angles outside the reference dataset entirely — genuinely novel directions, not just reproductions of known ad patterns.',
     ],
     retrospective:
-      'Combining a generative model with symbolic grounding in ConceptNet taught me that the most useful AI systems often come from combining approaches, not just scaling one model further.',
+      'The most useful engineering decision here wasn’t one that made it into the final pipeline — it was dropping cosine similarity after testing showed it didn’t earn its cost. Measuring whether an addition actually helps, and cutting it when it doesn’t, mattered more than stacking on another technique.',
   },
 ]
 
