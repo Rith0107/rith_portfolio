@@ -62,29 +62,30 @@ export const workEntries: WorkEntry[] = [
     accent: '#5b8cff',
     logo: '/logos/global-payments.png',
     oneLiner:
-      'Cut manual compliance review time by 90%+ with an AI-powered anomaly detection pipeline.',
+      'Cut manual compliance review time by 90%+ with an AI-powered system that catches text overlap and missing values in card mailers before they print.',
     overview:
-      'At Global Payments, I built an AI-powered anomaly detection system for customer-facing mailer documents — catching layout issues, text overlap, and missing values in semi-structured PDFs and HTML templates before they reached customers, cutting manual compliance review from hours to minutes.',
+      'At Global Payments, I built an AI-powered system for customer-facing card mailers that catches two costly quality issues before they reach print: text printed over existing text, and required monetary or percentage fields left blank. It flags and annotates the affected pages automatically, cutting manual compliance review from hours to minutes.',
     context:
-      'Every customer mailer — statements, notices, and other compliance-sensitive documents — had to be manually reviewed for formatting errors, missing data, and layout problems before going out. That process consumed 2–3 hours per review cycle and didn’t scale with mailer volume.',
+      'Unintended irregularities — overlapping text, missing required values — were a recurring quality issue in card mailers, causing reprints and delays. Manual, page-by-page review couldn’t scale to the mailer volume, and any fix had to work on both scanned and native-text PDFs, cheaply enough to run on every batch.',
     problem: [
-      'Mailer documents were semi-structured (PDFs and HTML templates), so issues could show up as subtle text overlaps, layout shifts, or silently missing values — not always obvious to catch programmatically.',
-      'Manual review was slow and inherently inconsistent, since different reviewers could catch different issues.',
-      'Any solution had to reach production-ready reliability, since it would gate real customer-facing communications in a compliance-sensitive financial context.',
+      'Overprinted or overlapping text often went unnoticed in large batches of documents, and manual QA was too slow and error-prone to reliably catch it at volume.',
+      'Critical fields — APR, credit limit, fees — sometimes rendered without a value, and needed to be caught whether they were an inline omission or a missing table entry.',
+      'Any solution had to work on both scanned and embedded-text PDFs, since mailers arrived in both forms.',
     ],
     process: [
-      'Built Python-based ML pipelines targeting the three main anomaly categories the team cared about most: text overlap, layout issues, and missing values in semi-structured documents.',
-      'Worked closely with engineers and stakeholders to shape what "correct" looked like for each document type, since compliance requirements varied across mailer formats.',
-      'Iterated on detection accuracy and integrated the pipeline into production enterprise systems using Agile development practices, testing against real mailer data before rollout.',
+      'For text-overlap detection, evaluated four approaches before settling on one: a bounding-box comparison of OCR text regions (simple, but failed on scanned PDFs and complex layouts), an OCR heatmap/blur method (fast, but dependent on brittle Tesseract tuning), and unlabeled clustering via autoencoders or SimCLR (needed no labels, but couldn’t reliably tell a real overlay from a legitimately different page design).',
+      'Landed on a labeled-reference approach instead: curated a small set of true text-overlay samples, embedded both those and each PDF crop with a pretrained ResNet-50 (2048-dimensional feature vectors, final classification layer removed), and flagged matches above a cosine-similarity threshold.',
+      'Built a separate missing-value detector: parsed mailer text and tables with pdfplumber, normalized run-together and line-broken text with wordninja, used regex against a maintained list of critical fields to catch missing $/% values, and verified true monetary/percentage entities with spaCy NER for multi-line cases.',
+      'Used PyMuPDF (fitz) to annotate flagged PDFs directly — a sticky note summarizing every detected page plus bookmarks to jump straight to it — and sorted output into good_pdfs/ and bad_pdfs/ folders so reviewers only had to open documents that actually needed attention.',
     ],
     outcome: [
       'Manual compliance review time dropped from 2–3 hours to under 15 minutes.',
-      'Anomaly detection time cut by 90%+.',
-      '95% detection accuracy achieved across the targeted anomaly types.',
+      '~95% accuracy detecting text overlays with few false positives, and >90% accuracy identifying missing required fields.',
+      'Processed 50MB mailer files in about 3 minutes, with a clear path to further speedup via GPU-accelerated PyTorch and ResNet-50.',
       'Solution integrated into production enterprise systems, not just a research prototype.',
     ],
     retrospective:
-      'The biggest lesson wasn’t about model sophistication — it was that a well-scoped ML pipeline earns trust by being reliable enough that a human reviewer can lean on it, not by being clever.',
+      'I went through three progressively more automated approaches — bounding boxes, heatmaps, self-supervised clustering — before the one that actually worked turned out to be the simplest: a small labeled reference set matched by embedding similarity. The fancier unsupervised methods were more interesting to build, but they couldn’t hit the precision a compliance workflow actually needs.',
   },
   {
     slug: 'cognida-ai',
