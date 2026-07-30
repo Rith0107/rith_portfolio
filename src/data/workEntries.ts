@@ -222,20 +222,20 @@ export const workEntries: WorkEntry[] = [
     category: 'project',
     accent: '#ff8bd1',
     oneLiner:
-      'A four-person team project turning a product and an emotion into a usable ad concept, combining ConceptNet, emotion-aware filtering, and GPT-3.',
+      'A system that turns a product and an emotion into a usable ad concept, combining ConceptNet, emotion-aware filtering, and GPT-3.',
     overview:
-      'Ad-Maker is a fourth-year team project (with D Maneesh Reddy, T Pranav Kumar Reddy, and Sree Deepya B, under Dr. Sunny Rai) that generates advertisement concepts from just a product and a target emotion. It expands the product into related concepts with ConceptNet, filters them by emotional relevance, and feeds the result to GPT-3 to produce a short, usable ad story.',
+      'Ad-Maker is a fourth-year project, built under the supervision of Dr. Sunny Rai, that generates advertisement concepts from just a product and a target emotion. It expands the product into related concepts with ConceptNet, filters them by emotional relevance, and feeds the result to GPT-3 to produce a short, usable ad story.',
     context:
-      'Coming up with an ad concept that actually connects with an audience usually starts from a blank page. We wanted to test whether pairing a semantic knowledge graph with a language model could reliably produce a usable starting point from nothing more than a product name and an emotional tone.',
+      'Coming up with an ad concept that actually connects with an audience usually starts from a blank page. I wanted to test whether pairing a semantic knowledge graph with a language model could reliably produce a usable starting point from nothing more than a product name and an emotional tone.',
     problem: [
       'Ad ideation is open-ended — a bare product name has to be turned into a concrete, emotionally-targeted concept before it can even be evaluated.',
       'GPT-3 run directly on a product name tends toward generic output, since the model has no signal for the tone the ad should carry.',
-      'The large ad dataset we validated against had no existing emotion labels to build on, so it couldn’t be used for emotion filtering as-is.',
+      'The large ad dataset I validated against had no existing emotion labels to build on, so it couldn’t be used for emotion filtering as-is.',
       'Any generated concept had to be screened for profanity and offensive language before it could reach a user.',
     ],
     process: [
       'Reviewed prior computational-creativity work — analogical-reasoning tools like the Retriever, metaphor generation for pictorial ads, and explainable computational creativity — to ground the approach before building anything.',
-      'Used conceptnet-lite to expand the product into related concepts via relations like used_for, is_a, part_of, and synonym, then scored each candidate against the user’s chosen emotion with NRCLex, which covers 10 emotions versus the 5 offered by text2emotion, the library we tried first.',
+      'Used conceptnet-lite to expand the product into related concepts via relations like used_for, is_a, part_of, and synonym, then scored each candidate against the user’s chosen emotion with NRCLex, which covers 10 emotions versus the 5 offered by text2emotion, the library I tried first.',
       'Built NLP pipelines to tag, semantically filter, and rank the large ad dataset itself, so it could be used both to emotion-label reference ads and to validate generated concepts against real creative direction.',
       'Passed the emotion-filtered concepts, the product, and the target emotion to a few-shot GPT-3 (Da Vinci) model trained on summarized real advertisements, falling back to an unfiltered GPT-3 pass when the emotion filter returned nothing.',
       'Ran every generated output through a profanity-check classifier — a linear SVM trained on 200k labeled samples — before it reached the user.',
