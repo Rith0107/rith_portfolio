@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Nav from './components/Nav'
+import Footer from './components/Footer'
 import Home from './pages/Home'
 import CaseStudy from './pages/CaseStudy'
 import Info from './pages/Info'
@@ -15,6 +16,7 @@ function App() {
         <Route path="/info" element={<Info />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
+      <Footer />
     </>
   )
 }
