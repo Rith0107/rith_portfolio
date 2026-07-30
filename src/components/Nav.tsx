@@ -3,17 +3,26 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import ResumeModal from './ResumeModal'
 import './Nav.css'
 
+const TABS = [
+  { to: '/', label: 'Work', end: true },
+  { to: '/info', label: 'Info', end: false },
+  { to: '/contact', label: 'Contact', end: false },
+]
+
 export default function Nav() {
   const [resumeOpen, setResumeOpen] = useState(false)
   const location = useLocation()
 
   const pillRef = useRef<HTMLElement>(null)
-  const workRef = useRef<HTMLAnchorElement>(null)
-  const infoRef = useRef<HTMLAnchorElement>(null)
+  const tabRefs = useRef<(HTMLAnchorElement | null)[]>([])
   const [indicator, setIndicator] = useState({ left: 0, width: 0 })
 
+  const activeIndex = TABS.findIndex((tab) =>
+    tab.end ? location.pathname === tab.to : location.pathname.startsWith(tab.to),
+  )
+
   useLayoutEffect(() => {
-    const activeLink = location.pathname === '/info' ? infoRef.current : workRef.current
+    const activeLink = tabRefs.current[activeIndex >= 0 ? activeIndex : 0]
     const pill = pillRef.current
     if (!activeLink || !pill) return
 
@@ -26,7 +35,7 @@ export default function Nav() {
     measure()
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
-  }, [location.pathname])
+  }, [location.pathname, activeIndex])
 
   return (
     <header className="nav">
@@ -46,21 +55,19 @@ export default function Nav() {
               className="nav-pill-indicator"
               style={{ transform: `translateX(${indicator.left}px)`, width: indicator.width }}
             />
-            <NavLink
-              to="/"
-              end
-              ref={workRef}
-              className={({ isActive }) => (isActive ? 'nav-pill-link active' : 'nav-pill-link')}
-            >
-              Work
-            </NavLink>
-            <NavLink
-              to="/info"
-              ref={infoRef}
-              className={({ isActive }) => (isActive ? 'nav-pill-link active' : 'nav-pill-link')}
-            >
-              Info
-            </NavLink>
+            {TABS.map((tab, index) => (
+              <NavLink
+                key={tab.to}
+                to={tab.to}
+                end={tab.end}
+                ref={(el) => {
+                  tabRefs.current[index] = el
+                }}
+                className={({ isActive }) => (isActive ? 'nav-pill-link active' : 'nav-pill-link')}
+              >
+                {tab.label}
+              </NavLink>
+            ))}
           </nav>
         </div>
 

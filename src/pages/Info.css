@@ -279,23 +279,6 @@ p.experience-body {
   color: rgba(242, 242, 243, 0.85);
 }
 
-.info-contact {
-  display: flex;
-  gap: var(--space-5);
-}
-
-.info-contact a {
-  font-weight: 500;
-  border-bottom: 1px solid var(--color-border-strong);
-  padding-bottom: 2px;
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-
-.info-contact a:hover {
-  color: var(--color-text-secondary);
-  border-color: var(--color-text-secondary);
-}
-
 @media (max-width: 600px) {
   .info {
     padding: var(--space-6) var(--space-4) var(--space-8);

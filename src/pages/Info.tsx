@@ -200,23 +200,6 @@ export default function Info() {
           <p className="skills-terminal-brace">{'}'}</p>
         </WindowFrame>
       </section>
-
-      <section className="info-section">
-        <Overline>Contact</Overline>
-        <div className="info-contact">
-          <a href="https://github.com/Rith0107" target="_blank" rel="noreferrer">
-            GitHub
-          </a>
-          <a
-            href="https://www.linkedin.com/in/rithwik-lagishetty/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            LinkedIn
-          </a>
-          <a href="mailto:rithwik.lagishetty@gmail.com">Email</a>
-        </div>
-      </section>
     </main>
   )
 }
