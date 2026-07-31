@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { workEntries } from '../data/workEntries'
 import WindowFrame from '../components/WindowFrame'
@@ -130,6 +131,40 @@ const CHAPTERS: Chapter[] = [
 export default function Info() {
   const experience = workEntries.filter((entry) => entry.category === 'experience')
 
+  useEffect(() => {
+    const visuals = Array.from(document.querySelectorAll<HTMLElement>('.info-chapter-visual'))
+    let ticking = false
+
+    function updateReflections() {
+      const viewportH = window.innerHeight
+      visuals.forEach((el) => {
+        const rect = el.getBoundingClientRect()
+        const center = rect.top + rect.height / 2
+        const progress = 1 - center / viewportH
+        const glowY = Math.min(140, Math.max(-40, -20 + progress * 140))
+        const glowX = Math.min(70, Math.max(30, 50 + (rect.left / window.innerWidth - 0.3) * 40))
+        el.style.setProperty('--glow-y', `${glowY}%`)
+        el.style.setProperty('--glow-x', `${glowX}%`)
+      })
+      ticking = false
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateReflections)
+        ticking = true
+      }
+    }
+
+    updateReflections()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+
   return (
     <main className="info">
       <section className="info-section info-about">
@@ -146,7 +181,7 @@ export default function Info() {
                 key={chapter.title}
                 className={`info-chapter-row${index % 2 === 1 ? ' reverse' : ''}`}
               >
-                <WindowFrame className="info-chapter-visual">
+                <div className="info-chapter-visual">
                   {chapter.photo ? (
                     <img src={chapter.photo} alt="" style={{ aspectRatio: chapter.aspect }} />
                   ) : (
@@ -160,7 +195,7 @@ export default function Info() {
                       <span className="info-chapter-dot" style={{ background: chapter.accent }} />
                     </div>
                   )}
-                </WindowFrame>
+                </div>
                 <div className="info-chapter">
                   <h3>{chapter.title}</h3>
                   <p>{chapter.text}</p>
