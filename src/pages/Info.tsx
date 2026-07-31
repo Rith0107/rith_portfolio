@@ -71,12 +71,12 @@ const EDUCATION: EducationEntry[] = [
   },
 ]
 
-function Overline({ children }: { children: string }) {
+function Overline({ children, as: Tag = 'div' }: { children: string; as?: 'div' | 'h1' }) {
   return (
-    <div className="info-overline">
+    <Tag className="info-overline">
       <span className="info-overline-dot" />
       <span className="info-overline-text">{children}</span>
-    </div>
+    </Tag>
   )
 }
 
@@ -88,23 +88,95 @@ function PinIcon() {
   )
 }
 
+interface Chapter {
+  title: string
+  text: string
+  accent: string
+  aspect: number
+  photo?: string
+}
+
+const CHAPTERS: Chapter[] = [
+  {
+    title: 'Where it started',
+    text: "I've been curious about computers for as long as I can remember. As a kid I'd just sit there wondering — what's actually happening when I press a key, how does this thing even work? That curiosity never really went away, it just eventually turned into a CS degree.",
+    accent: '#8b7cf6',
+    aspect: 0.75,
+    photo: '/photos/nyc-skyline.jpg',
+  },
+  {
+    title: 'Then AI happened',
+    text: "What got me hooked on AI and ML was realizing you could actually train a machine to do what you want, instead of just telling it exactly what to do step by step. That blew my mind a little, honestly. That's the moment I went from liking computers to wanting to build the ones that learn.",
+    accent: '#4fd1c5',
+    aspect: 0.562,
+    photo: '/photos/ai-coding-dog.jpg',
+  },
+  {
+    title: 'A big leap',
+    text: "I moved from India to the US for my master's, which meant leaving family and everything familiar behind and starting over on my own. It was hard. But looking back, it's probably the thing that's made me grow the most.",
+    accent: '#f6ad55',
+    aspect: 0.75,
+    photo: '/photos/vermont-landscape.jpg',
+  },
+  {
+    title: 'Outside of work,',
+    text: "You'll usually find me making art or planning the next trip. Both make me slow down and actually notice things — something code rarely asks of me.",
+    accent: '#f687b3',
+    aspect: 0.662,
+    photo: '/photos/art-colosseum.jpg',
+  },
+]
+
 export default function Info() {
   const experience = workEntries.filter((entry) => entry.category === 'experience')
 
   return (
     <main className="info">
       <section className="info-section info-about">
-        <h1>About</h1>
-        <p>
-          I'm a software engineer currently at FIS, modernizing a legacy
-          Cards platform and contributing to AI-driven document
-          intelligence work. Before that, I built anomaly-detection systems
-          at Global Payments and worked across product and engineering at
-          Cognida.ai. My background spans backend systems and machine
-          learning — I care most about work that's reliable enough for
-          someone else to depend on, not just clever.
-        </p>
+        <Overline as="h1">About</Overline>
+        <div className="info-about-body">
+          <p className="info-about-hook">
+            I'm a software engineer who's still chasing the same question that got me here —{' '}
+            <span className="gradient-text">how does this actually work?</span>
+          </p>
+
+          <div className="info-chapters-list">
+            {CHAPTERS.map((chapter, index) => (
+              <div
+                key={chapter.title}
+                className={`info-chapter-row${index % 2 === 1 ? ' reverse' : ''}`}
+              >
+                <WindowFrame className="info-chapter-visual">
+                  {chapter.photo ? (
+                    <img src={chapter.photo} alt="" style={{ aspectRatio: chapter.aspect }} />
+                  ) : (
+                    <div
+                      className="info-chapter-placeholder"
+                      style={{
+                        aspectRatio: chapter.aspect,
+                        background: `linear-gradient(135deg, ${chapter.accent}40 0%, ${chapter.accent}12 60%, transparent 100%)`,
+                      }}
+                    >
+                      <span className="info-chapter-dot" style={{ background: chapter.accent }} />
+                    </div>
+                  )}
+                </WindowFrame>
+                <div className="info-chapter">
+                  <h3>{chapter.title}</h3>
+                  <p>{chapter.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="info-sign-off">
+            <p>That's the story so far — thanks for reading it.</p>
+            <img src="/photos/signature.png" alt="Rithwik's signature" className="info-signature" />
+          </div>
+        </div>
       </section>
+
+      <div className="info-divider" />
 
       <section className="info-section">
         <Overline>Experience</Overline>
@@ -156,6 +228,8 @@ export default function Info() {
         </div>
       </section>
 
+      <div className="info-divider" />
+
       <section className="info-section">
         <Overline>Education</Overline>
         <div className="edu-cards">
@@ -177,6 +251,8 @@ export default function Info() {
           ))}
         </div>
       </section>
+
+      <div className="info-divider" />
 
       <section className="info-section">
         <Overline>Skills</Overline>
