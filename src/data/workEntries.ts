@@ -165,24 +165,26 @@ export const workEntries: WorkEntry[] = [
     oneLiner:
       'A MobileNetV2-based computer vision pipeline for classifying disaster imagery from aerial photos.',
     overview:
-      'Built and evaluated a MobileNetV2-based computer vision pipeline in Python for aerial disaster image classification, using data augmentation and class balancing to improve model generalization on imbalanced datasets.',
+      'Built and evaluated a MobileNetV2-based computer vision pipeline in Python to classify aerial drone imagery into disaster categories, starting from a full exploratory analysis of the AIDER dataset to understand exactly how imbalanced and inconsistent the raw data was before writing any training code.',
     context:
-      'Aerial disaster-imagery datasets are inherently imbalanced — most images show no disaster at all — which biases standard classifiers toward the majority class and hides real performance on the cases that matter most.',
+      'Aerial footage from drones is one of the fastest ways to survey a disaster zone, but someone still has to look at every frame and decide what they’re seeing. That’s slow, and it defeats the point of using a drone in the first place if a human has to review the feed frame by frame.',
     problem: [
-      'Disaster classes were significantly underrepresented compared to normal, no-disaster imagery.',
-      'Aerial images vary widely in altitude, lighting, and angle, making generalization difficult for a lightweight model.',
-      'The model needed to stay efficient enough to be practical, not just accurate on paper — hence MobileNetV2 over a heavier backbone.',
+      'The AIDER dataset is heavily skewed: 4,390 "normal" images against roughly 500 each for fire, flooded areas, collapsed buildings, and traffic incidents — so a naive classifier could score well just by guessing "normal" every time.',
+      'Source images ranged from 123×152 pixels up to 5184×3456, shot at inconsistent altitudes and angles, with no uniform size or framing to train on directly.',
+      'The model needed to stay lightweight enough to eventually run on UAV hardware, not just perform well on a workstation.',
     ],
     process: [
-      'Built the classification pipeline in Python using MobileNetV2 as the backbone for efficiency.',
-      'Applied data augmentation and class-balancing techniques to counteract the dataset imbalance.',
-      'Evaluated the model across held-out disaster categories to check real generalization, not just aggregate accuracy.',
+      'Ran a full EDA on the AIDER dataset first — class counts, image dimensions, format consistency — before touching a model, to actually see the shape of the imbalance rather than assume it.',
+      'Rebalanced the training split deliberately: capped normal images at 4,000 and each disaster class at 450 for training, holding out the remainder for testing, instead of training on the raw 9:1 split.',
+      'Standardized images to a consistent input size using padding and adaptive resizing rather than stretching, to keep aerial detail intact across wildly different source resolutions.',
+      'Applied data augmentation — rotation, flipping, color adjustment — to the underrepresented disaster classes to further offset the imbalance without discarding real data.',
+      'Built the classification pipeline around MobileNetV2 for its efficiency, with UAV deployment as the target, not just benchmark accuracy.',
     ],
     outcome: [
-      'Improved model generalization on imbalanced datasets through targeted data augmentation and class balancing.',
+      'Landed on a preprocessing and class-balancing pipeline that treats the dataset’s imbalance as a first-class problem rather than an afterthought — the groundwork that determines whether a disaster classifier is actually trustworthy in the field.',
     ],
     retrospective:
-      'Working with genuinely imbalanced data made clear why raw accuracy is a misleading metric on its own — the augmentation and balancing work mattered more to real performance than architecture tuning did.',
+      'Doing the EDA properly — actually looking at the class distribution and image size spread before touching a model — made it obvious how much of "model performance" gets decided upstream, in how you handle the data.',
   },
   {
     slug: 'used-cars-price-prediction',
@@ -193,26 +195,26 @@ export const workEntries: WorkEntry[] = [
     category: 'project',
     accent: '#ffd23f',
     oneLiner:
-      'An end-to-end ML pipeline predicting used car prices with SHAP-based interpretability.',
+      'An eight-model comparison for used car price prediction, with the ensemble models I built and tuned coming out on top.',
     overview:
-      'Developed an end-to-end machine learning pipeline for used car price prediction using Random Forest and Gradient Boosting, with feature engineering, preprocessing, and SHAP-based model interpretation.',
+      'Compared eight regression approaches — from a plain Linear Regression baseline up through Random Forest, XGBoost, LightGBM, and CatBoost — to predict used car prices, handling missing data, feature engineering, and a heavily skewed target variable along the way. I focused on building and tuning the ensemble models, which ended up being the strongest performers in the comparison.',
     context:
-      'Used car pricing depends on many interacting factors — mileage, age, brand, condition — and a price estimate is only useful if people can trust and understand what’s driving it, not just receive a number.',
+      'Used car pricing depends on a mix of factors — mileage, model year, brand, fuel type, condition — that don’t move in a straight line with price, so the real question wasn’t which single model to reach for, it was which approach could actually capture that non-linearity.',
     problem: [
-      'Raw listing data was noisy and inconsistent, requiring significant cleaning and feature engineering before modeling.',
-      'A black-box model that only outputs a price isn’t actionable without explaining which factors drove that price.',
-      'Needed to compare model families to find the right balance between accuracy and interpretability.',
+      'A Linear Regression baseline collapsed outright — a negative R² and error values in the trillions — because car pricing just isn’t a linear function of mileage and age.',
+      'The target variable, price, was heavily right-skewed: most cars clustered at the low end with a long tail of expensive outliers that could throw off a model trained naively.',
+      'With eight model families in the comparison, from Ridge Regression to Neural Networks, the real work was tuning and evaluating each one fairly rather than just picking a favorite.',
     ],
     process: [
-      'Cleaned and engineered features from raw listing data, handling missing values and categorical variables.',
-      'Trained and compared Random Forest and Gradient Boosting models on the processed dataset.',
-      'Applied SHAP to break down individual predictions, surfacing which features most influenced any given price estimate.',
+      'Built and hyperparameter-tuned the ensemble models — Random Forest, XGBoost, LightGBM, and CatBoost — using grid search to find the right depth, learning rate, and estimator count for each.',
+      'Random Forest landed on 100 estimators and a max depth of 30 after tuning; XGBoost’s best configuration (300 estimators, max depth 5, learning rate 0.2) ended up beating every other model in the comparison.',
+      'Evaluated every model — from the Linear Regression baseline through the gradient-boosted ones — on the same held-out test set using R², RMSE, and MAE, so the comparison stayed apples-to-apples.',
     ],
     outcome: [
-      'Used SHAP-based interpretation to explain model predictions, not just optimize for accuracy.',
+      'XGBoost finished on top across all eight models (R² 0.82), with LightGBM (0.81) and CatBoost (0.80) close behind — the ensemble and gradient-boosted models I worked on comfortably outperformed the linear baselines.',
     ],
     retrospective:
-      'This project pushed me to treat interpretability as a first-class requirement rather than an afterthought — a model’s explanation is often as valuable as its prediction.',
+      'Watching a plain Linear Regression fail outright — a negative R² — was the clearest possible argument for why model selection has to follow the actual shape of the data, not just familiarity or convenience.',
   },
   {
     slug: 'ad-maker',
