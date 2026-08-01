@@ -149,9 +149,30 @@
 }
 
 .info-signature {
+  display: block;
   height: 64px;
-  width: auto;
-  transform: rotate(0deg);
+  width: calc(64px * 2.152);
+  -webkit-mask-image: url('/photos/signature.png');
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-image: url('/photos/signature.png');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  background: linear-gradient(
+    115deg,
+    #6b6d72 0%,
+    #d8dbe0 18%,
+    #ffffff 32%,
+    #9a9ea5 46%,
+    #55575c 58%,
+    #eef0f3 72%,
+    #7d8085 86%,
+    #c9ccd1 100%
+  );
+  background-size: 220% 220%;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.4));
 }
 
 @media (max-width: 700px) {

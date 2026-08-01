@@ -206,7 +206,7 @@ export default function Info() {
 
           <div className="info-sign-off">
             <p>That's the story so far — thanks for reading it.</p>
-            <img src="/photos/signature.png" alt="Rithwik's signature" className="info-signature" />
+            <span className="info-signature" role="img" aria-label="Rithwik's signature" />
           </div>
         </div>
       </section>

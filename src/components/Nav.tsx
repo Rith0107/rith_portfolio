@@ -46,10 +46,6 @@ export default function Nav() {
         </Link>
 
         <div className="nav-pill-wrapper">
-          <span
-            className="nav-pill-glow"
-            style={{ transform: `translateX(${indicator.left + indicator.width / 2}px)` }}
-          />
           <nav className="nav-pill" ref={pillRef}>
             <span
               className="nav-pill-indicator"
