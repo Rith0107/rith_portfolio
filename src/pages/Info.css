@@ -162,16 +162,17 @@
   mask-position: center;
   background: linear-gradient(
     115deg,
-    #6b6d72 0%,
-    #d8dbe0 18%,
-    #ffffff 32%,
-    #9a9ea5 46%,
-    #55575c 58%,
-    #eef0f3 72%,
-    #7d8085 86%,
-    #c9ccd1 100%
+    #c4c7cc 0%,
+    #f6f7f9 16%,
+    #ffffff 30%,
+    #aeb1b8 46%,
+    #8d9096 58%,
+    #eef0f3 74%,
+    #bfc2c8 88%,
+    #f4f5f7 100%
   );
   background-size: 220% 220%;
+  background-position: 15% 30%;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.4));
 }
 
