@@ -33,6 +33,30 @@
   margin-bottom: var(--space-4);
 }
 
+.case-header .case-title-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.case-logo {
+  display: block;
+  height: clamp(36px, 6vw, 52px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  margin-bottom: var(--space-4);
+}
+
+.case-logo-inline {
+  height: 1em;
+  margin-top: 0.1em;
+}
+
 .case-oneliner {
   font-size: 1.2rem;
   line-height: 1.5;
@@ -41,26 +65,26 @@
 
 .case-visual {
   margin-bottom: var(--space-7);
-}
-
-.case-visual .window-frame-body {
-  padding: 0;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg-elevated-2) 100%);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-window);
+  overflow: hidden;
 }
 
 .case-visual-inner {
-  height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
-.case-visual-dot {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  filter: blur(2px);
-  opacity: 0.85;
+.case-visual-image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
+
 
 .case-body {
   display: flex;

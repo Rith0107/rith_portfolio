@@ -1,6 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
 import { workEntries, getWorkEntry } from '../data/workEntries'
-import WindowFrame from '../components/WindowFrame'
 import Reveal from '../components/Reveal'
 import './CaseStudy.css'
 
@@ -18,35 +17,47 @@ export default function CaseStudy() {
     )
   }
 
-  const currentIndex = workEntries.findIndex((item) => item.slug === entry.slug)
-  const next = workEntries[(currentIndex + 1) % workEntries.length]
+  const sameCategory = workEntries.filter((item) => item.category === entry.category)
+  const currentIndex = sameCategory.findIndex((item) => item.slug === entry.slug)
+  const next = currentIndex < sameCategory.length - 1 ? sameCategory[currentIndex + 1] : undefined
 
   return (
     <main className="case-study">
-      <Link to="/" className="case-back">
-        ← Back to work
+      <Link to={entry.category === 'experience' ? '/info' : '/'} className="case-back">
+        ← Back to {entry.category === 'experience' ? 'info' : 'work'}
       </Link>
 
       <header className="case-header">
         <p className="case-meta">
           {entry.role} · {entry.location} · {entry.period}
         </p>
-        <h1>{entry.title}</h1>
+        {entry.logo && !entry.logoWithTitle ? (
+          <img src={entry.logo} alt={entry.title} className="case-logo" />
+        ) : entry.logoWithTitle ? (
+          <h1 className="case-title-brand">
+            {entry.title}
+            <img src={entry.logo} alt="" className="case-logo-inline" />
+          </h1>
+        ) : (
+          <h1>{entry.title}</h1>
+        )}
         <p className="case-oneliner">{entry.oneLiner}</p>
       </header>
 
-      <Reveal>
-        <WindowFrame className="case-visual">
-          <div
-            className="case-visual-inner"
-            style={{
-              background: `linear-gradient(135deg, ${entry.accent}40 0%, ${entry.accent}12 60%, transparent 100%)`,
-            }}
-          >
-            <span className="case-visual-dot" style={{ background: entry.accent }} />
+      {entry.image && (
+        <Reveal>
+          <div className="case-visual">
+            <div
+              className="case-visual-inner"
+              style={{
+                background: `linear-gradient(135deg, ${entry.accent}40 0%, ${entry.accent}12 60%, transparent 100%)`,
+              }}
+            >
+              <img src={entry.image} alt="" className="case-visual-image" />
+            </div>
           </div>
-        </WindowFrame>
-      </Reveal>
+        </Reveal>
+      )}
 
       <div className="case-body">
         <p className="case-overview">{entry.overview}</p>
@@ -98,10 +109,12 @@ export default function CaseStudy() {
         )}
       </div>
 
-      <Link to={`/work/${next.slug}`} className="case-next">
-        <span className="case-next-label">Next</span>
-        <span className="case-next-title">{next.title} →</span>
-      </Link>
+      {next && (
+        <Link to={`/work/${next.slug}`} className="case-next">
+          <span className="case-next-label">Next</span>
+          <span className="case-next-title">{next.title} →</span>
+        </Link>
+      )}
     </main>
   )
 }

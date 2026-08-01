@@ -9,6 +9,7 @@ export interface WorkEntry {
   accent: string
   logo?: string
   logoWithTitle?: boolean
+  image?: string
   oneLiner: string
   overview: string
   context?: string
@@ -162,6 +163,7 @@ export const workEntries: WorkEntry[] = [
     location: 'NJIT',
     category: 'project',
     accent: '#ff6b6b',
+    image: '/projects/disaster-recognition.svg',
     oneLiner:
       'A MobileNetV2-based computer vision pipeline for classifying disaster imagery from aerial photos.',
     overview:
@@ -194,6 +196,7 @@ export const workEntries: WorkEntry[] = [
     location: 'NJIT',
     category: 'project',
     accent: '#ffd23f',
+    image: '/projects/used-cars-price-prediction.svg',
     oneLiner:
       'An eight-model comparison for used car price prediction, with the ensemble models I built and tuned coming out on top.',
     overview:
@@ -224,6 +227,7 @@ export const workEntries: WorkEntry[] = [
     location: 'Mahindra University',
     category: 'project',
     accent: '#ff8bd1',
+    image: '/projects/ad-maker.svg',
     oneLiner:
       'A system that turns a product and an emotion into a usable ad concept, combining ConceptNet, emotion-aware filtering, and GPT-3.',
     overview:

@@ -1,12 +1,25 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import ResumeModal from './ResumeModal'
+import { getWorkEntry } from '../data/workEntries'
 import './Nav.css'
 
+function isProjectCaseStudy(path: string) {
+  const slug = path.match(/^\/work\/([^/]+)/)?.[1]
+  if (!slug) return false
+  return getWorkEntry(slug)?.category === 'project'
+}
+
+function isExperienceCaseStudy(path: string) {
+  const slug = path.match(/^\/work\/([^/]+)/)?.[1]
+  if (!slug) return false
+  return getWorkEntry(slug)?.category === 'experience'
+}
+
 const TABS = [
-  { to: '/', label: 'Work', end: true },
-  { to: '/info', label: 'Info', end: false },
-  { to: '/contact', label: 'Contact', end: false },
+  { to: '/', label: 'Work', match: (path: string) => path === '/' || isProjectCaseStudy(path) },
+  { to: '/info', label: 'Info', match: (path: string) => path.startsWith('/info') || isExperienceCaseStudy(path) },
+  { to: '/contact', label: 'Contact', match: (path: string) => path.startsWith('/contact') },
 ]
 
 export default function Nav() {
@@ -17,9 +30,7 @@ export default function Nav() {
   const tabRefs = useRef<(HTMLAnchorElement | null)[]>([])
   const [indicator, setIndicator] = useState({ left: 0, width: 0 })
 
-  const activeIndex = TABS.findIndex((tab) =>
-    tab.end ? location.pathname === tab.to : location.pathname.startsWith(tab.to),
-  )
+  const activeIndex = TABS.findIndex((tab) => tab.match(location.pathname))
 
   useLayoutEffect(() => {
     const activeLink = tabRefs.current[activeIndex >= 0 ? activeIndex : 0]
@@ -55,11 +66,10 @@ export default function Nav() {
               <NavLink
                 key={tab.to}
                 to={tab.to}
-                end={tab.end}
                 ref={(el) => {
                   tabRefs.current[index] = el
                 }}
-                className={({ isActive }) => (isActive ? 'nav-pill-link active' : 'nav-pill-link')}
+                className={index === activeIndex ? 'nav-pill-link active' : 'nav-pill-link'}
               >
                 {tab.label}
               </NavLink>
