@@ -38,6 +38,19 @@
   background: #28c840;
 }
 
+.window-dot-close,
+.window-dot-maximize {
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.window-dot-close:hover,
+.window-dot-maximize:hover {
+  opacity: 0.85;
+}
+
 .window-frame-body {
   padding: var(--space-7) var(--space-6);
 }

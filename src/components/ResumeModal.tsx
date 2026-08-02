@@ -14,6 +14,7 @@ interface ResumeModalProps {
 export default function ResumeModal({ onClose }: ResumeModalProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [status, setStatus] = useState<'loading' | 'error' | 'ready'>('loading')
+  const [maximized, setMaximized] = useState(false)
 
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
@@ -30,16 +31,21 @@ export default function ResumeModal({ onClose }: ResumeModalProps) {
       const container = containerRef.current
       if (!container) return
 
+      container.innerHTML = ''
+      setStatus('loading')
+
       try {
         const pdf = await pdfjsLib.getDocument('/resume.pdf').promise
         if (cancelled || !containerRef.current) return
+
+        const outputScale = Math.min(window.devicePixelRatio || 1, 3)
 
         for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
           const page = await pdf.getPage(pageNumber)
           if (cancelled || !containerRef.current) return
 
-          const scale = (container.clientWidth || 640) / page.getViewport({ scale: 1 }).width
-          const viewport = page.getViewport({ scale })
+          const cssScale = (container.clientWidth || 640) / page.getViewport({ scale: 1 }).width
+          const viewport = page.getViewport({ scale: cssScale * outputScale })
 
           const canvas = document.createElement('canvas')
           canvas.className = 'resume-modal-page'
@@ -63,21 +69,25 @@ export default function ResumeModal({ onClose }: ResumeModalProps) {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [maximized])
 
   return createPortal(
     <div className="resume-modal-overlay" onClick={onClose}>
-      <div className="resume-modal" onClick={(event) => event.stopPropagation()}>
-        <WindowFrame className="resume-modal-frame">
+      <div
+        className={`resume-modal${maximized ? ' resume-modal-maximized' : ''}`}
+        onClick={(event) => event.stopPropagation()}
+      >
+        <WindowFrame
+          className="resume-modal-frame"
+          onClose={onClose}
+          onMaximize={() => setMaximized((m) => !m)}
+        >
           <div className="resume-modal-bar">
             <span>Rithwik_Lagishetty_Resume.pdf</span>
             <div className="resume-modal-actions">
               <a href="/resume.pdf" download>
                 Download ↓
               </a>
-              <button type="button" onClick={onClose} aria-label="Close resume preview">
-                Close ✕
-              </button>
             </div>
           </div>
           <div className="resume-modal-scroll">
