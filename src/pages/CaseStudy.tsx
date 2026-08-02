@@ -1,11 +1,14 @@
 import { Link, useParams } from 'react-router-dom'
 import { workEntries, getWorkEntry } from '../data/workEntries'
 import Reveal from '../components/Reveal'
+import { useScrollGlow } from '../hooks/useScrollGlow'
 import './CaseStudy.css'
 
 export default function CaseStudy() {
   const { slug } = useParams()
   const entry = slug ? getWorkEntry(slug) : undefined
+
+  useScrollGlow('.case-visual-inner', [slug])
 
   if (!entry) {
     return (
@@ -47,12 +50,7 @@ export default function CaseStudy() {
       {entry.image && (
         <Reveal>
           <div className="case-visual">
-            <div
-              className="case-visual-inner"
-              style={{
-                background: `linear-gradient(135deg, ${entry.accent}40 0%, ${entry.accent}12 60%, transparent 100%)`,
-              }}
-            >
+            <div className="case-visual-inner">
               <img src={entry.image} alt="" className="case-visual-image" />
             </div>
           </div>

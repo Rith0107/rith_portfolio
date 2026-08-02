@@ -1,4 +1,7 @@
 <svg viewBox="0 0 1600 1088" xmlns="http://www.w3.org/2000/svg">
+<defs><clipPath id="cardround"><rect x="0" y="0" width="1600" height="1088" rx="28"/></clipPath></defs>
+<g clip-path="url(#cardround)">
+
 <defs>
 <linearGradient id="bgfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161618"/><stop offset="100%" stop-color="#0a0a0b"/></linearGradient>
 </defs>
@@ -183,4 +186,5 @@
 <text x="1254" y="774" font-family="Inter, -apple-system, sans-serif" font-size="13.5" font-weight="600" fill="#17181a" text-anchor="start" opacity="1">Zone 18</text>
 <text x="1522" y="774" font-family="Inter, -apple-system, sans-serif" font-size="13.5" font-weight="700" fill="#2fbf71" text-anchor="end" opacity="1">0.95</text>
 <text x="1254" y="796" font-family="Inter, -apple-system, sans-serif" font-size="11.5" font-weight="500" fill="#9a9da3" text-anchor="start" opacity="1">Sector B &#183; Drone 2</text>
+</g>
 </svg>

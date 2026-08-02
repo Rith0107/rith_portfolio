@@ -2,10 +2,13 @@ import { Link } from 'react-router-dom'
 import { workEntries } from '../data/workEntries'
 import WindowFrame from '../components/WindowFrame'
 import Reveal from '../components/Reveal'
+import { useScrollGlow } from '../hooks/useScrollGlow'
 import './Home.css'
 
 export default function Home() {
   const projects = workEntries.filter((entry) => entry.category === 'project')
+
+  useScrollGlow('.work-card-visual')
 
   return (
     <main className="home">
@@ -60,16 +63,18 @@ function WorkCard({ entry }: { entry: (typeof workEntries)[number] }) {
           </p>
           <p className="work-card-oneliner">{entry.oneLiner}</p>
         </div>
-        <div
-          className="work-card-visual"
-          style={{
-            background: `linear-gradient(135deg, ${entry.accent}33 0%, ${entry.accent}0d 60%, transparent 100%)`,
-          }}
-        >
+        <div className="work-card-visual">
           {entry.image ? (
             <img src={entry.image} alt="" className="work-card-visual-image" />
           ) : (
-            <span className="work-card-visual-dot" style={{ background: entry.accent }} />
+            <div
+              className="work-card-visual-fallback"
+              style={{
+                background: `linear-gradient(135deg, ${entry.accent}33 0%, ${entry.accent}0d 60%, transparent 100%)`,
+              }}
+            >
+              <span className="work-card-visual-dot" style={{ background: entry.accent }} />
+            </div>
           )}
         </div>
       </div>
