@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { workEntries } from '../data/workEntries'
 import WindowFrame from '../components/WindowFrame'
@@ -9,23 +10,20 @@ import './Home.css'
 export default function Home() {
   const projects = workEntries.filter((entry) => entry.category === 'project')
 
-  useScrollGlow('.work-card-visual')
+  useScrollGlow('.work-card')
 
   return (
     <main className="home">
       <section className="hero">
         <div className="hero-frame-wrap">
           <WindowFrame className="hero-frame">
-            <p className="hero-eyebrow">Software Engineer · Atlanta, USA</p>
             <h1 className="hero-headline">
-              I build backend systems and <span className="gradient-text">AI-driven tools</span>{' '}
-              that hold up in production.
+              I build reliable systems & <span className="gradient-text">AI-powered tools</span>.
             </h1>
-            <p className="hero-tagline">
-              Currently modernizing enterprise platforms at FIS, with a background in
-              machine learning, document intelligence, and shipping reliable software
-              end to end.
-            </p>
+            <div className="hero-bio">
+              <p className="hero-bio-primary">Software engineer at FIS in Atlanta.</p>
+              <p className="hero-bio-secondary">Formerly at Global Payments and Cognida.ai.</p>
+            </div>
             <div className="hero-links">
               <a href="https://github.com/Rith0107" target="_blank" rel="noreferrer">
                 GitHub ↗
@@ -48,8 +46,51 @@ export default function Home() {
             </Reveal>
           ))}
         </div>
+        <BrewingLine />
       </section>
     </main>
+  )
+}
+
+function BrewingLine() {
+  const text = 'More projects brewing...'
+  const ref = useRef<HTMLParagraphElement>(null)
+  const [typed, setTyped] = useState('')
+  const [done, setDone] = useState(false)
+  const startedRef = useRef(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || startedRef.current) return
+        startedRef.current = true
+
+        let i = 0
+        const interval = setInterval(() => {
+          i += 1
+          setTyped(text.slice(0, i))
+          if (i >= text.length) {
+            clearInterval(interval)
+            setDone(true)
+          }
+        }, 55)
+      },
+      { threshold: 0.9 },
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <p className="work-more-brewing" ref={ref}>
+      <span className="work-more-brewing-prompt">$</span>
+      <span>{typed}</span>
+      <span className={`work-more-brewing-cursor${done ? ' blinking' : ''}`} />
+    </p>
   )
 }
 
