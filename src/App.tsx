@@ -23,9 +23,10 @@ function App() {
   }, [location.pathname])
 
   useEffect(() => {
+    const forceTop = (location.state as { scrollToTop?: boolean } | null)?.scrollToTop
     const saved = scrollPositions.current.get(location.pathname)
-    window.scrollTo(0, saved ?? 0)
-  }, [location.pathname])
+    window.scrollTo(0, forceTop ? 0 : saved ?? 0)
+  }, [location.pathname, location.state])
 
   return (
     <>

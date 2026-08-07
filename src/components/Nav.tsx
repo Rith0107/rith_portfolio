@@ -65,7 +65,7 @@ export default function Nav() {
   return (
     <header className={`nav${scrolled ? ' nav-scrolled' : ''}`}>
       <div className="nav-inner">
-        <Link to="/" className="nav-identity">
+        <Link to="/" className="nav-identity" state={{ scrollToTop: true }}>
           <span className="nav-name">Rithwik Lagishetty</span>
           <span className="nav-title">Software Engineer</span>
         </Link>

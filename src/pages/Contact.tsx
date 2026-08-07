@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import './Contact.css'
 
-const FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
+const FORM_ENDPOINT = 'https://formspree.io/f/xkjwonnk'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
@@ -55,9 +55,8 @@ export default function Contact() {
             Whether you just want to say hi, talk about a role or project, or share something
             you're building — I'd genuinely love to hear from you. Go ahead, write below.
           </p>
-          <p className="postcard-direct">
-            Prefer email? Reach me directly at{' '}
-            <a href="mailto:rithwik.lagishetty@gmail.com">rithwik.lagishetty@gmail.com</a>.
+          <p className="contact-ps">
+            P.S. — if you've got a second, I'd love to know what you thought of this site.
           </p>
         </div>
 

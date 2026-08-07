@@ -143,16 +143,17 @@
   transform: rotate(-1deg);
 }
 
-.postcard-direct {
-  font-size: 0.85rem;
+.contact-ps {
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
   color: var(--color-text-muted);
-  margin-top: var(--space-3);
+  max-width: 320px;
+  margin-top: var(--space-2);
+  transform: rotate(-1deg);
 }
 
-.postcard-direct a {
-  color: var(--color-text-secondary);
-  text-decoration: underline;
-}
 
 .contact-form {
   display: flex;
@@ -217,8 +218,18 @@
 }
 
 .contact-success {
-  font-size: 1.05rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 1.7rem;
+  font-weight: 500;
+  line-height: 1.4;
   color: var(--color-text-secondary);
+  max-width: 320px;
+  margin: 0 auto;
 }
 
 .contact-error {
