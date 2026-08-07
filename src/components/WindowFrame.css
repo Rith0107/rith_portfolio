@@ -40,10 +40,20 @@
 
 .window-dot-close,
 .window-dot-maximize {
+  position: relative;
   padding: 0;
   border: none;
   cursor: pointer;
   transition: opacity 0.15s ease;
+}
+
+/* Keep the visual dot small (matches macOS traffic lights) but give it a
+   larger invisible hit area, since 11px is too small to reliably tap. */
+.window-dot-close::before,
+.window-dot-maximize::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
 }
 
 .window-dot-close:hover,

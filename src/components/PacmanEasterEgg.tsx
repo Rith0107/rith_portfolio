@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react'
-import PacmanModal from './PacmanModal'
+import { lazy, Suspense, useEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react'
 import './PacmanEasterEgg.css'
+
+const PacmanModal = lazy(() => import('./PacmanModal'))
 
 export default function PacmanEasterEgg() {
   const [prompting, setPrompting] = useState(false)
@@ -83,7 +84,11 @@ export default function PacmanEasterEgg() {
         </div>
       )}
 
-      {playing && <PacmanModal onClose={() => setPlaying(false)} />}
+      {playing && (
+        <Suspense fallback={null}>
+          <PacmanModal onClose={() => setPlaying(false)} />
+        </Suspense>
+      )}
     </>
   )
 }

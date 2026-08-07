@@ -148,7 +148,7 @@
 
   .nav-pill-link {
     width: 74px;
-    padding: 6px 0;
+    padding: 11px 0;
     font-size: 0.82rem;
   }
 
@@ -159,7 +159,9 @@
     gap: var(--space-4);
   }
 
-  .nav-external a {
+  .nav-external a,
+  .nav-external-button {
+    padding: 9px 0;
     font-size: 0.82rem;
   }
 }

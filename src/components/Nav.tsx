@@ -1,8 +1,9 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import ResumeModal from './ResumeModal'
 import { getWorkEntry } from '../data/workEntries'
 import './Nav.css'
+
+const ResumeModal = lazy(() => import('./ResumeModal'))
 
 function isProjectCaseStudy(path: string) {
   const slug = path.match(/^\/work\/([^/]+)/)?.[1]
@@ -109,7 +110,11 @@ export default function Nav() {
         </div>
       </div>
 
-      {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
+      {resumeOpen && (
+        <Suspense fallback={null}>
+          <ResumeModal onClose={() => setResumeOpen(false)} />
+        </Suspense>
+      )}
     </header>
   )
 }
