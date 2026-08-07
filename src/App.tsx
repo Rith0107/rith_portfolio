@@ -17,12 +17,14 @@ function App() {
   return (
     <>
       <Nav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/work/:slug" element={<CaseStudy />} />
-        <Route path="/info" element={<Info />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
+      <div key={location.pathname} className="page-transition">
+        <Routes location={location}>
+          <Route path="/" element={<Home />} />
+          <Route path="/work/:slug" element={<CaseStudy />} />
+          <Route path="/info" element={<Info />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
       <Footer />
     </>
   )

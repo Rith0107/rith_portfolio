@@ -88,21 +88,34 @@
   position: relative;
   border-radius: var(--radius-lg);
   padding: 8px;
-  --glow-y: 0%;
-  --glow-x: 50%;
-  background:
-    radial-gradient(240px circle at var(--glow-x) var(--glow-y), rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0) 100%),
-    linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg-elevated-2) 100%);
+  background: linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg-elevated-2) 100%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.65),
     inset 0 0 8px rgba(0, 0, 0, 0.4),
     0 0 60px rgba(0, 0, 0, 0.2),
     0 30px 80px rgba(0, 0, 0, 0.45);
   overflow: hidden;
-  will-change: background;
+}
+
+/* Glow moves via transform only (compositor-only) instead of repainting a
+   background radial-gradient on every scroll frame. */
+.info-chapter-visual::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: -120px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0) 70%);
+  transform: translate(var(--glow-x, 50%), var(--glow-y, 0%));
+  will-change: transform;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .info-chapter-placeholder {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,6 +124,8 @@
 }
 
 .info-chapter-visual img {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   object-fit: cover;

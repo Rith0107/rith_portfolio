@@ -48,7 +48,7 @@ body {
   min-height: 100vh;
 }
 
-#root > main {
+#root > .page-transition {
   flex: 1;
 }
 
@@ -89,8 +89,27 @@ p {
   }
 }
 
+.page-transition {
+  animation: page-fade-in 0.32s ease both;
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .gradient-text {
+    animation: none;
+  }
+
+  .page-transition {
     animation: none;
   }
 }

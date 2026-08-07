@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type MouseEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react'
 import PacmanModal from './PacmanModal'
 import './PacmanEasterEgg.css'
 
@@ -7,6 +7,20 @@ export default function PacmanEasterEgg() {
   const [playing, setPlaying] = useState(false)
   const [promptX, setPromptX] = useState<number | null>(null)
   const [tailOffset, setTailOffset] = useState(0)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [travelDistance, setTravelDistance] = useState(0)
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+
+    const measure = () => setTravelDistance(track.getBoundingClientRect().width - 20)
+    measure()
+
+    const observer = new ResizeObserver(measure)
+    observer.observe(track)
+    return () => observer.disconnect()
+  }, [])
 
   function handleSpriteClick(event: MouseEvent<HTMLButtonElement>) {
     const wrap = event.currentTarget.closest('.hero-frame-wrap')
@@ -25,12 +39,13 @@ export default function PacmanEasterEgg() {
 
   return (
     <>
-      <div className="pacman-egg-track">
+      <div className="pacman-egg-track" ref={trackRef}>
         <button
           type="button"
           className={`pacman-egg-sprite${prompting ? ' pacman-egg-paused' : ''}`}
           onClick={handleSpriteClick}
           aria-label="Play a hidden game"
+          style={{ '--pacman-track-distance': `${travelDistance}px` } as CSSProperties}
         >
           <span className="pacman-egg-shape">
             <span className="pacman-egg-mouth" />

@@ -100,7 +100,13 @@ function WorkCard({ entry }: { entry: (typeof workEntries)[number] }) {
         </div>
         <div className="work-card-visual">
           {entry.image ? (
-            <img src={entry.image} alt="" className="work-card-visual-image" />
+            <img
+              src={entry.image}
+              alt=""
+              className="work-card-visual-image"
+              loading="lazy"
+              decoding="async"
+            />
           ) : (
             <div
               className="work-card-visual-fallback"

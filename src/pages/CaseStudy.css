@@ -79,17 +79,31 @@
   justify-content: center;
   padding: 12px;
   overflow: hidden;
-  --glow-y: 0%;
-  --glow-x: 50%;
-  background:
-    radial-gradient(360px circle at var(--glow-x) var(--glow-y), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 100%),
-    linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg-elevated-2) 100%);
+  background: linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg-elevated-2) 100%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     inset 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
+/* Glow moves via transform only (compositor-only) instead of repainting a
+   background radial-gradient on every scroll frame. */
+.case-visual-inner::before {
+  content: '';
+  position: absolute;
+  top: -180px;
+  left: -180px;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 70%);
+  transform: translate(var(--glow-x, 50%), var(--glow-y, 0%));
+  will-change: transform;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .case-visual-image {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   height: auto;

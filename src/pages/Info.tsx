@@ -133,7 +133,13 @@ function ChapterVisual({ chapter }: { chapter: Chapter }) {
   return (
     <div className="info-chapter-visual">
       {chapter.photo ? (
-        <img src={chapter.photo} alt="" style={{ aspectRatio: chapter.aspect }} />
+        <img
+          src={chapter.photo}
+          alt=""
+          style={{ aspectRatio: chapter.aspect }}
+          loading="lazy"
+          decoding="async"
+        />
       ) : (
         <div
           className="info-chapter-placeholder"
@@ -235,10 +241,15 @@ export default function Info() {
                     entry.logoWithTitle ? (
                       <>
                         {entry.title}
-                        <img src={entry.logo} alt="" className="experience-logo experience-logo-inline" />
+                        <img
+                          src={entry.logo}
+                          alt=""
+                          className="experience-logo experience-logo-inline"
+                          decoding="async"
+                        />
                       </>
                     ) : (
-                      <img src={entry.logo} alt={entry.title} className="experience-logo" />
+                      <img src={entry.logo} alt={entry.title} className="experience-logo" decoding="async" />
                     )
                   ) : (
                     entry.title
@@ -282,7 +293,7 @@ export default function Info() {
           {EDUCATION.map((item) => (
             <div key={item.school} className="edu-card">
               <span className="edu-card-logo-wrap">
-                <img src={item.logo} alt={item.school} className="edu-card-logo" />
+                <img src={item.logo} alt={item.school} className="edu-card-logo" decoding="async" />
               </span>
               <h3 className="edu-card-name">{item.school}</h3>
               {item.subtitle && <p className="edu-card-subtitle">{item.subtitle}</p>}

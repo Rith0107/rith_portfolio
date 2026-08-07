@@ -12,10 +12,12 @@ export function useScrollGlow(selector: string, deps: unknown[] = []) {
         const rect = el.getBoundingClientRect()
         const center = rect.top + rect.height / 2
         const progress = 1 - center / viewportH
-        const glowY = Math.min(140, Math.max(-40, -20 + progress * 140))
-        const glowX = Math.min(70, Math.max(30, 50 + (rect.left / window.innerWidth - 0.3) * 40))
-        el.style.setProperty('--glow-y', `${glowY}%`)
-        el.style.setProperty('--glow-x', `${glowX}%`)
+        const glowYPct = Math.min(140, Math.max(-40, -20 + progress * 140))
+        const glowXPct = Math.min(70, Math.max(30, 50 + (rect.left / window.innerWidth - 0.3) * 40))
+        // Expressed as a pixel translate (not a background gradient position)
+        // so the browser only ever has to composite, never repaint.
+        el.style.setProperty('--glow-x', `${(glowXPct / 100) * rect.width}px`)
+        el.style.setProperty('--glow-y', `${(glowYPct / 100) * rect.height}px`)
       })
       ticking = false
     }

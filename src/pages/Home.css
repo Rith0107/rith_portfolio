@@ -117,11 +117,7 @@
   flex-direction: column;
   position: relative;
   border-radius: var(--radius-lg);
-  --glow-y: 0%;
-  --glow-x: 50%;
-  background:
-    radial-gradient(420px circle at var(--glow-x) var(--glow-y), rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0) 100%),
-    linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg-elevated-2) 100%);
+  background: linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg-elevated-2) 100%);
   border: 1px solid var(--color-border);
   box-shadow:
     var(--shadow-window),
@@ -130,12 +126,31 @@
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
+/* Scroll-driven glow lives on its own layer and only ever moves via transform
+   (compositor-only), instead of re-painting a background radial-gradient on
+   every scroll frame — that was expensive enough on its own to drop frames. */
+.work-card::before {
+  content: '';
+  position: absolute;
+  top: -210px;
+  left: -210px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0) 70%);
+  transform: translate(var(--glow-x, 50%), var(--glow-y, 0%));
+  will-change: transform;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .work-card-link:hover .work-card {
   transform: translateY(-4px);
   border-color: var(--color-border-strong);
 }
 
 .work-card-top {
+  position: relative;
+  z-index: 1;
   padding: var(--space-6) var(--space-5) var(--space-5);
 }
 
@@ -176,6 +191,7 @@
   aspect-ratio: 1600 / 1088;
   margin-top: auto;
   position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;

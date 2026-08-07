@@ -35,11 +35,11 @@ export default function CaseStudy() {
           {entry.role} · {entry.location} · {entry.period}
         </p>
         {entry.logo && !entry.logoWithTitle ? (
-          <img src={entry.logo} alt={entry.title} className="case-logo" />
+          <img src={entry.logo} alt={entry.title} className="case-logo" decoding="async" />
         ) : entry.logoWithTitle ? (
           <h1 className="case-title-brand">
             {entry.title}
-            <img src={entry.logo} alt="" className="case-logo-inline" />
+            <img src={entry.logo} alt="" className="case-logo-inline" decoding="async" />
           </h1>
         ) : (
           <h1>{entry.title}</h1>
@@ -51,7 +51,7 @@ export default function CaseStudy() {
         <Reveal>
           <div className="case-visual">
             <div className="case-visual-inner">
-              <img src={entry.image} alt="" className="case-visual-image" />
+              <img src={entry.image} alt="" className="case-visual-image" decoding="async" />
             </div>
           </div>
         </Reveal>
