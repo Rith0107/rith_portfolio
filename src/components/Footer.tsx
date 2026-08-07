@@ -1,4 +1,7 @@
+import { useLocation } from 'react-router-dom'
 import './Footer.css'
+
+const CARS = ['/cars/car-1-k4.png', '/cars/car-2-scross.png', '/cars/car-3-i10.png']
 
 function MailIcon() {
   return (
@@ -21,9 +24,18 @@ function InstagramIcon() {
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const location = useLocation()
+  const showCars = location.pathname === '/contact'
 
   return (
     <footer className="footer">
+      {showCars && (
+        <div className="footer-cars" aria-hidden="true">
+          {CARS.map((src) => (
+            <img key={src} src={src} alt="" className="footer-car" />
+          ))}
+        </div>
+      )}
       <div className="footer-inner">
         <div className="footer-links">
           <a href="mailto:rithwik.lagishetty@gmail.com" className="footer-link">

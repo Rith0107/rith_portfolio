@@ -33,6 +33,11 @@ const DIRS: Dir[] = [
 interface Entity {
   x: number
   y: number
+  // The tile the entity is exactly centered on, or was last centered on
+  // (i.e. the tile it's currently departing from). Maintained explicitly
+  // rather than re-derived from x/y each frame — see stepEntity for why.
+  col: number
+  row: number
   dir: Dir
   nextDir: Dir
   speed: number
@@ -129,24 +134,55 @@ function tileAt(px: number): number {
 }
 
 function stepEntity(entity: Entity, board: number[][], dt: number, decide: () => Dir) {
-  const col = tileAt(entity.x)
-  const row = tileAt(entity.y)
-  const atCenterX = Math.abs(entity.x - col * TILE) < 1
-  const atCenterY = Math.abs(entity.y - row * TILE) < 1
+  // Move by an explicit distance budget instead of a single unconditional
+  // translate. That way a turn/wall decision is made exactly once per tile
+  // center reached — never repeatedly while merely "close" to one (which
+  // stutters the entity in place) and never skipped over on a fast frame
+  // (which let it drift through walls).
+  let remaining = entity.speed * dt
+  let guard = 0
 
-  if (atCenterX && atCenterY) {
-    entity.x = col * TILE
-    entity.y = row * TILE
-    const desired = decide()
-    if (desired && isWalkable(board, row + desired.dy, col + desired.dx)) {
-      entity.dir = desired
-    } else if (!isWalkable(board, row + entity.dir.dy, col + entity.dir.dx)) {
-      entity.dir = ZERO
+  while (remaining > 0.0001 && guard < 8) {
+    guard += 1
+    // entity.col/row are persistent state, not re-derived from x/y here. Deriving
+    // them via Math.round on a mid-transit position is what caused the original
+    // bug: once past the halfway point to the next tile, rounding would jump the
+    // "current tile" forward prematurely, so the target kept recalculating one
+    // tile further ahead than reality and the entity never actually arrived —
+    // sailing straight through walls and off the board forever.
+    const centerX = entity.col * TILE
+    const centerY = entity.row * TILE
+    const atCenter = Math.abs(entity.x - centerX) < 0.01 && Math.abs(entity.y - centerY) < 0.01
+
+    if (atCenter) {
+      entity.x = centerX
+      entity.y = centerY
+      const desired = decide()
+      if (desired && isWalkable(board, entity.row + desired.dy, entity.col + desired.dx)) {
+        entity.dir = desired
+      } else if (!isWalkable(board, entity.row + entity.dir.dy, entity.col + entity.dir.dx)) {
+        entity.dir = ZERO
+      }
+    }
+
+    if (entity.dir.dx === 0 && entity.dir.dy === 0) break
+
+    const targetX = centerX + entity.dir.dx * TILE
+    const targetY = centerY + entity.dir.dy * TILE
+    const distToTarget = Math.hypot(targetX - entity.x, targetY - entity.y)
+
+    if (remaining < distToTarget) {
+      entity.x += entity.dir.dx * remaining
+      entity.y += entity.dir.dy * remaining
+      remaining = 0
+    } else {
+      entity.x = targetX
+      entity.y = targetY
+      entity.col += entity.dir.dx
+      entity.row += entity.dir.dy
+      remaining -= distToTarget
     }
   }
-
-  entity.x += entity.dir.dx * entity.speed * dt
-  entity.y += entity.dir.dy * entity.speed * dt
 }
 
 function ghostDecide(ghost: Entity, board: number[][], pac: Entity): Dir {
@@ -188,6 +224,7 @@ function HeartIcon({ lost }: { lost: boolean }) {
 
 export default function PacmanGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const bgCanvasRef = useRef<HTMLCanvasElement | null>(null)
   const boardRef = useRef<number[][]>([])
   const pacRef = useRef<Entity | null>(null)
   const ghostsRef = useRef<Entity[]>([])
@@ -205,6 +242,8 @@ export default function PacmanGame() {
   function placeEntity(entity: Entity, spawn: { row: number; col: number }) {
     entity.x = spawn.col * TILE
     entity.y = spawn.row * TILE
+    entity.col = spawn.col
+    entity.row = spawn.row
     entity.dir = ZERO
     entity.frightened = false
   }
@@ -213,10 +252,13 @@ export default function PacmanGame() {
     const { board, spawns, totalDots } = buildBoard()
     boardRef.current = board
     dotsRemainingRef.current = totalDots
+    renderStaticBackground(board)
 
     pacRef.current = {
       x: spawns.pac.col * TILE,
       y: spawns.pac.row * TILE,
+      col: spawns.pac.col,
+      row: spawns.pac.row,
       dir: ZERO,
       nextDir: ZERO,
       speed: TILE * 4.6,
@@ -227,6 +269,8 @@ export default function PacmanGame() {
     ghostsRef.current = spawns.ghosts.map((spawn, i) => ({
       x: spawn.col * TILE,
       y: spawn.row * TILE,
+      col: spawn.col,
+      row: spawn.row,
       dir: DIRS[i % DIRS.length],
       nextDir: ZERO,
       speed: TILE * 3.9,
@@ -358,6 +402,36 @@ export default function PacmanGame() {
     ctx.closePath()
   }
 
+  function renderStaticBackground(board: number[][]) {
+    let bg = bgCanvasRef.current
+    if (!bg) {
+      bg = document.createElement('canvas')
+      bg.width = CANVAS_W
+      bg.height = CANVAS_H
+      bgCanvasRef.current = bg
+    }
+    const ctx = bg.getContext('2d')
+    if (!ctx) return
+
+    ctx.clearRect(0, 0, CANVAS_W, CANVAS_H)
+    ctx.fillStyle = '#0a0a0b'
+    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H)
+
+    for (let r = 0; r < board.length; r += 1) {
+      for (let c = 0; c < board[0].length; c += 1) {
+        if (board[r][c] === WALL) continue
+        const x = c * TILE - TILE / 2
+        const y = r * TILE - TILE / 2
+        ctx.fillStyle = '#141416'
+        ctx.strokeStyle = 'rgba(255,255,255,0.06)'
+        ctx.lineWidth = 1
+        roundRect(ctx, x + 1, y + 1, TILE - 2, TILE - 2, 4)
+        ctx.fill()
+        ctx.stroke()
+      }
+    }
+  }
+
   function drawPac(ctx: CanvasRenderingContext2D, pac: Entity, time: number) {
     const radius = TILE * 0.42
     const mouth = 0.18 + Math.abs(Math.sin(time / 90)) * 0.24
@@ -367,16 +441,22 @@ export default function PacmanGame() {
     else if (pac.dir.dy === -1) angle = -Math.PI / 2
     else if (pac.dir.dy === 1) angle = Math.PI / 2
 
-    ctx.save()
+    // A radial-gradient halo is far cheaper per frame than a live shadowBlur pass.
+    const glowR = radius * 2.2
+    const glow = ctx.createRadialGradient(pac.x, pac.y, radius * 0.6, pac.x, pac.y, glowR)
+    glow.addColorStop(0, 'rgba(242,242,243,0.35)')
+    glow.addColorStop(1, 'rgba(242,242,243,0)')
+    ctx.fillStyle = glow
+    ctx.beginPath()
+    ctx.arc(pac.x, pac.y, glowR, 0, Math.PI * 2)
+    ctx.fill()
+
     ctx.fillStyle = '#f2f2f3'
-    ctx.shadowColor = 'rgba(242,242,243,0.5)'
-    ctx.shadowBlur = 8
     ctx.beginPath()
     ctx.moveTo(pac.x, pac.y)
     ctx.arc(pac.x, pac.y, radius, angle + mouth * Math.PI, angle + (2 - mouth) * Math.PI)
     ctx.closePath()
     ctx.fill()
-    ctx.restore()
   }
 
   function drawGhost(ctx: CanvasRenderingContext2D, ghost: Entity, time: number) {
@@ -429,22 +509,12 @@ export default function PacmanGame() {
     ghosts: Entity[],
     time: number,
   ) {
-    ctx.clearRect(0, 0, CANVAS_W, CANVAS_H)
-    ctx.fillStyle = '#0a0a0b'
-    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H)
-
-    for (let r = 0; r < board.length; r += 1) {
-      for (let c = 0; c < board[0].length; c += 1) {
-        if (board[r][c] === WALL) continue
-        const x = c * TILE - TILE / 2
-        const y = r * TILE - TILE / 2
-        ctx.fillStyle = '#141416'
-        ctx.strokeStyle = 'rgba(255,255,255,0.06)'
-        ctx.lineWidth = 1
-        roundRect(ctx, x + 1, y + 1, TILE - 2, TILE - 2, 4)
-        ctx.fill()
-        ctx.stroke()
-      }
+    if (bgCanvasRef.current) {
+      ctx.drawImage(bgCanvasRef.current, 0, 0)
+    } else {
+      ctx.clearRect(0, 0, CANVAS_W, CANVAS_H)
+      ctx.fillStyle = '#0a0a0b'
+      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H)
     }
 
     for (let r = 0; r < board.length; r += 1) {
@@ -457,14 +527,20 @@ export default function PacmanGame() {
           ctx.fill()
         } else if (tile === PELLET) {
           const pulse = 0.55 + Math.sin(time / 180) * 0.35
-          ctx.save()
-          ctx.shadowColor = 'rgba(242,242,243,0.9)'
-          ctx.shadowBlur = 10
+          const px = c * TILE
+          const py = r * TILE
+          const glow = ctx.createRadialGradient(px, py, 2, px, py, 12)
+          glow.addColorStop(0, `rgba(242,242,243,${pulse})`)
+          glow.addColorStop(1, 'rgba(242,242,243,0)')
+          ctx.fillStyle = glow
+          ctx.beginPath()
+          ctx.arc(px, py, 12, 0, Math.PI * 2)
+          ctx.fill()
+
           ctx.fillStyle = `rgba(242,242,243,${pulse})`
           ctx.beginPath()
-          ctx.arc(c * TILE, r * TILE, 5.5, 0, Math.PI * 2)
+          ctx.arc(px, py, 5.5, 0, Math.PI * 2)
           ctx.fill()
-          ctx.restore()
         }
       }
     }

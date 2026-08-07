@@ -1,6 +1,39 @@
 .footer {
+  position: relative;
   border-top: 1px solid var(--color-border);
   margin-top: var(--space-9);
+}
+
+.footer-cars {
+  position: absolute;
+  top: 0;
+  right: var(--space-6);
+  transform: translateY(-100%);
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.footer-car {
+  height: 15px;
+  width: auto;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.footer-car:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .footer-cars {
+    right: var(--space-4);
+  }
+
+  .footer-car {
+    height: 13px;
+  }
 }
 
 .footer-inner {

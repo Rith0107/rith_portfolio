@@ -20,18 +20,11 @@ export default function Home() {
             <h1 className="hero-headline">
               I build reliable systems & <span className="gradient-text">AI-powered tools</span>.
             </h1>
-            <div className="hero-bio">
-              <p className="hero-bio-primary">Software engineer at FIS in Atlanta.</p>
-              <p className="hero-bio-secondary">Formerly at Global Payments and Cognida.ai.</p>
-            </div>
-            <div className="hero-links">
-              <a href="https://github.com/Rith0107" target="_blank" rel="noreferrer">
-                GitHub ↗
-              </a>
-              <a href="https://www.linkedin.com/in/rithwik-lagishetty/" target="_blank" rel="noreferrer">
-                LinkedIn ↗
-              </a>
-              <a href="mailto:rithwik.lagishetty@gmail.com">Email ↗</a>
+            <div className="hero-bio-row">
+              <div className="hero-bio-box">
+                <p className="hero-bio-primary">Software engineer at FIS in Atlanta.</p>
+                <p className="hero-bio-secondary">Formerly at Global Payments and Cognida.ai.</p>
+              </div>
             </div>
           </WindowFrame>
           <PacmanEasterEgg />
@@ -103,9 +96,6 @@ function WorkCard({ entry }: { entry: (typeof workEntries)[number] }) {
             <h3>{entry.title}</h3>
             <ArrowIcon />
           </div>
-          <p className="work-card-meta">
-            {entry.role} · {entry.location} · {entry.period}
-          </p>
           <p className="work-card-oneliner">{entry.oneLiner}</p>
         </div>
         <div className="work-card-visual">

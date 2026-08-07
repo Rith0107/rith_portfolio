@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { workEntries } from '../data/workEntries'
 import WindowFrame from '../components/WindowFrame'
 import { useScrollGlow } from '../hooks/useScrollGlow'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import './Info.css'
 
 const SKILLS: { category: string; items: string[] }[] = [
@@ -121,15 +122,55 @@ const CHAPTERS: Chapter[] = [
   },
   {
     title: 'Outside of work,',
-    text: "You'll usually find me making art or planning the next trip. Both make me slow down and actually notice things — something code rarely asks of me.",
+    text: "You'll usually find me cooking, out shooting photos, or geeking out over cars — road trips are my favorite excuse to indulge that obsession. Add in the occasional cricket match and that's pretty much life outside of code. All of it makes me slow down and actually notice things — something code rarely asks of me.",
     accent: '#f687b3',
     aspect: 0.662,
     photo: '/photos/art-colosseum.jpg',
   },
 ]
 
+function ChapterVisual({ chapter }: { chapter: Chapter }) {
+  return (
+    <div className="info-chapter-visual">
+      {chapter.photo ? (
+        <img src={chapter.photo} alt="" style={{ aspectRatio: chapter.aspect }} />
+      ) : (
+        <div
+          className="info-chapter-placeholder"
+          style={{
+            aspectRatio: chapter.aspect,
+            background: `linear-gradient(135deg, ${chapter.accent}40 0%, ${chapter.accent}12 60%, transparent 100%)`,
+          }}
+        >
+          <span className="info-chapter-dot" style={{ background: chapter.accent }} />
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ChapterText({ chapter }: { chapter: Chapter }) {
+  return (
+    <div className="info-chapter">
+      <h3>{chapter.title}</h3>
+      <p>{chapter.text}</p>
+    </div>
+  )
+}
+
+function SignOff() {
+  return (
+    <div className="info-sign-off">
+      <p>That's the story so far — thanks for reading.</p>
+      <span className="info-signature" role="img" aria-label="Rithwik's signature" />
+    </div>
+  )
+}
+
 export default function Info() {
   const experience = workEntries.filter((entry) => entry.category === 'experience')
+  const isDesktop = useMediaQuery('(min-width: 701px)')
+  const lastChapterIndex = CHAPTERS.length - 1
 
   useScrollGlow('.info-chapter-visual')
 
@@ -143,39 +184,41 @@ export default function Info() {
             <span className="gradient-text">how does this actually work?</span>
           </p>
 
-          <div className="info-chapters-list">
-            {CHAPTERS.map((chapter, index) => (
-              <div
-                key={chapter.title}
-                className={`info-chapter-row${index % 2 === 1 ? ' reverse' : ''}`}
-              >
-                <div className="info-chapter-visual">
-                  {chapter.photo ? (
-                    <img src={chapter.photo} alt="" style={{ aspectRatio: chapter.aspect }} />
+          {isDesktop ? (
+            <div className="info-chapters-columns">
+              <div className="info-chapters-col">
+                {CHAPTERS.map((chapter, index) =>
+                  index % 2 === 0 ? (
+                    <ChapterVisual key={chapter.title} chapter={chapter} />
                   ) : (
-                    <div
-                      className="info-chapter-placeholder"
-                      style={{
-                        aspectRatio: chapter.aspect,
-                        background: `linear-gradient(135deg, ${chapter.accent}40 0%, ${chapter.accent}12 60%, transparent 100%)`,
-                      }}
-                    >
-                      <span className="info-chapter-dot" style={{ background: chapter.accent }} />
-                    </div>
-                  )}
-                </div>
-                <div className="info-chapter">
-                  <h3>{chapter.title}</h3>
-                  <p>{chapter.text}</p>
-                </div>
+                    <ChapterText key={chapter.title} chapter={chapter} />
+                  ),
+                )}
+                {lastChapterIndex % 2 === 1 && <SignOff key="sign-off" />}
               </div>
-            ))}
-          </div>
+              <div className="info-chapters-col">
+                {CHAPTERS.map((chapter, index) =>
+                  index % 2 === 0 ? (
+                    <ChapterText key={chapter.title} chapter={chapter} />
+                  ) : (
+                    <ChapterVisual key={chapter.title} chapter={chapter} />
+                  ),
+                )}
+                {lastChapterIndex % 2 === 0 && <SignOff key="sign-off" />}
+              </div>
+            </div>
+          ) : (
+            <div className="info-chapters-list">
+              {CHAPTERS.map((chapter) => (
+                <div key={chapter.title} className="info-chapter-row">
+                  <ChapterVisual chapter={chapter} />
+                  <ChapterText chapter={chapter} />
+                </div>
+              ))}
+            </div>
+          )}
 
-          <div className="info-sign-off">
-            <p>That's the story so far — thanks for reading it.</p>
-            <span className="info-signature" role="img" aria-label="Rithwik's signature" />
-          </div>
+          {!isDesktop && <SignOff />}
         </div>
       </section>
 
