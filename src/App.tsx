@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
@@ -9,9 +9,22 @@ import Contact from './pages/Contact'
 
 function App() {
   const location = useLocation()
+  const scrollPositions = useRef<Map<string, number>>(new Map())
+
+  // Continuously remember where the user is scrolled to on each page, so
+  // returning to it (e.g. via a "back to work" link) can restore that spot
+  // instead of dropping them back at the top.
+  useEffect(() => {
+    const onScroll = () => {
+      scrollPositions.current.set(location.pathname, window.scrollY)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [location.pathname])
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    const saved = scrollPositions.current.get(location.pathname)
+    window.scrollTo(0, saved ?? 0)
   }, [location.pathname])
 
   return (
