@@ -209,11 +209,10 @@
 }
 
 .experience-row {
-  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-3) var(--space-7);
-  padding: var(--space-4) calc(var(--space-5) + 28px) var(--space-4) var(--space-5);
+  padding: var(--space-4) var(--space-5);
   margin: 0 calc(var(--space-5) * -1);
   border-radius: var(--radius-md);
   transition: background 0.15s ease;
@@ -224,12 +223,18 @@
   background: var(--color-bg-elevated);
 }
 
+/* Company block + arrow share a row so the arrow centers against the logo
+   line specifically, not the full (taller, description-bearing) row. */
+.experience-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
 /* Persistent tap/click affordance — see RowArrowIcon comment in Info.tsx. */
 .experience-row-arrow {
-  position: absolute;
-  top: 50%;
-  right: var(--space-5);
-  transform: translateY(-50%);
+  flex-shrink: 0;
   width: 18px;
   height: 18px;
   color: var(--color-text-muted);
@@ -239,7 +244,7 @@
 .experience-row:hover .experience-row-arrow,
 .experience-row:active .experience-row-arrow {
   color: var(--color-text);
-  transform: translateY(-50%) translateX(3px);
+  transform: translateX(3px);
 }
 
 .edu-cards {

@@ -23,7 +23,7 @@ export default function PacmanModal({ onClose }: PacmanModalProps) {
   return createPortal(
     <div className="pacman-modal-overlay" onClick={onClose}>
       <div className="pacman-modal" onClick={(event) => event.stopPropagation()}>
-        <WindowFrame className="pacman-modal-frame" onClose={onClose}>
+        <WindowFrame className="pacman-modal-frame" hideDots>
           <div className="pacman-modal-bar">
             <span className="pacman-modal-title">Pacman</span>
             <button

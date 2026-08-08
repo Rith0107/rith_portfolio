@@ -265,7 +265,7 @@
      instead of running underneath it. */
   .postcard-message {
     gap: var(--space-2);
-    padding-top: 80px;
+    padding-top: 100px;
   }
 
   .postcard-address {
@@ -275,6 +275,10 @@
   }
 
   .postcard-stamp {
+    /* Inset past the striped border (14px on mobile) plus breathing room —
+       top:0/right:0 sat flush against the stripe, visually colliding with it. */
+    top: 18px;
+    right: 18px;
     width: 56px;
     height: 68px;
   }

@@ -255,30 +255,33 @@ export default function Info() {
         <div className="experience-list">
           {experience.map((entry) => (
             <Link key={entry.slug} to={`/work/${entry.slug}`} className="experience-row">
-              <div className="experience-company-block">
-                <div className="experience-company">
-                  {entry.logo ? (
-                    entry.logoWithTitle ? (
-                      <>
-                        {entry.title}
-                        <img
-                          src={entry.logo}
-                          alt=""
-                          className="experience-logo experience-logo-inline"
-                          decoding="async"
-                        />
-                      </>
+              <div className="experience-row-top">
+                <div className="experience-company-block">
+                  <div className="experience-company">
+                    {entry.logo ? (
+                      entry.logoWithTitle ? (
+                        <>
+                          {entry.title}
+                          <img
+                            src={entry.logo}
+                            alt=""
+                            className="experience-logo experience-logo-inline"
+                            decoding="async"
+                          />
+                        </>
+                      ) : (
+                        <img src={entry.logo} alt={entry.title} className="experience-logo" decoding="async" />
+                      )
                     ) : (
-                      <img src={entry.logo} alt={entry.title} className="experience-logo" decoding="async" />
-                    )
-                  ) : (
-                    entry.title
-                  )}
+                      entry.title
+                    )}
+                  </div>
+                  <span className="experience-location">
+                    <PinIcon />
+                    {entry.location}
+                  </span>
                 </div>
-                <span className="experience-location">
-                  <PinIcon />
-                  {entry.location}
-                </span>
+                <RowArrowIcon />
               </div>
               <div className="experience-details">
                 {entry.roles ? (
@@ -300,7 +303,6 @@ export default function Info() {
                 )}
                 <p className="experience-body">{entry.oneLiner}</p>
               </div>
-              <RowArrowIcon />
             </Link>
           ))}
         </div>

@@ -5,14 +5,6 @@ import './Nav.css'
 
 const ResumeModal = lazy(() => import('./ResumeModal'))
 
-function MenuIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-      <path d="M4 7h16M4 12h16M4 17h16" />
-    </svg>
-  )
-}
-
 function isProjectCaseStudy(path: string) {
   const slug = path.match(/^\/work\/([^/]+)/)?.[1]
   if (!slug) return false
@@ -119,6 +111,7 @@ export default function Nav() {
               <NavLink
                 key={tab.to}
                 to={tab.to}
+                end
                 state={{ scrollToTop: true }}
                 ref={(el) => {
                   tabRefs.current[index] = el
@@ -153,7 +146,7 @@ export default function Nav() {
             aria-haspopup="true"
             aria-expanded={menuOpen}
           >
-            <MenuIcon />
+            <span className="nav-menu-trigger-glyph">@</span>
           </button>
           {menuOpen && (
             <div className="nav-menu-panel">

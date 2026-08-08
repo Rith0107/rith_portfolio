@@ -156,9 +156,11 @@
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.nav-menu-trigger svg {
-  width: 16px;
-  height: 16px;
+.nav-menu-trigger-glyph {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1;
+  transform: translateY(-1px);
 }
 
 .nav-menu-trigger:hover,
