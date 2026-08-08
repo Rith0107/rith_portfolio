@@ -15,7 +15,6 @@ interface ResumeModalProps {
 export default function ResumeModal({ onClose }: ResumeModalProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [status, setStatus] = useState<'loading' | 'error' | 'ready'>('loading')
-  const [maximized, setMaximized] = useState(false)
 
   useScrollLock(true)
 
@@ -72,25 +71,21 @@ export default function ResumeModal({ onClose }: ResumeModalProps) {
     return () => {
       cancelled = true
     }
-  }, [maximized])
+  }, [])
 
   return createPortal(
     <div className="resume-modal-overlay" onClick={onClose}>
-      <div
-        className={`resume-modal${maximized ? ' resume-modal-maximized' : ''}`}
-        onClick={(event) => event.stopPropagation()}
-      >
-        <WindowFrame
-          className="resume-modal-frame"
-          onClose={onClose}
-          onMaximize={() => setMaximized((m) => !m)}
-        >
+      <div className="resume-modal" onClick={(event) => event.stopPropagation()}>
+        <WindowFrame className="resume-modal-frame" hideDots>
           <div className="resume-modal-bar">
             <span>Rithwik_Lagishetty_Resume.pdf</span>
             <div className="resume-modal-actions">
               <a href="/resume.pdf" download>
                 Download ↓
               </a>
+              <button type="button" className="resume-modal-close" onClick={onClose} aria-label="Close">
+                ✕
+              </button>
             </div>
           </div>
           <div className="resume-modal-scroll">
