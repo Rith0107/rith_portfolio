@@ -14,12 +14,6 @@
   width: 100%;
   max-width: 720px;
   height: min(85vh, 900px);
-  transition: max-width 0.25s ease, height 0.25s ease;
-}
-
-.resume-modal-maximized {
-  max-width: 1100px;
-  height: 95vh;
 }
 
 .resume-modal-frame {
@@ -67,9 +61,8 @@
   color: var(--color-text);
 }
 
-/* Explicit close/maximize actions, in addition to (now removed, see
-   hideDots) the traffic-light dots — matches the Pac-Man modal pattern. */
-.resume-modal-maximize,
+/* Explicit close action, in addition to (now removed, see hideDots) the
+   traffic-light dots — matches the Pac-Man modal pattern. */
 .resume-modal-close {
   display: flex;
   align-items: center;
@@ -86,8 +79,6 @@
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.resume-modal-maximize:hover,
-.resume-modal-maximize:active,
 .resume-modal-close:hover,
 .resume-modal-close:active {
   background: rgba(255, 255, 255, 0.14);
@@ -166,10 +157,5 @@
   .resume-modal {
     height: auto;
     max-height: min(88vh, 900px);
-  }
-
-  .resume-modal-maximized {
-    height: auto;
-    max-height: 95vh;
   }
 }
