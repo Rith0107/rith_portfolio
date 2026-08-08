@@ -53,8 +53,7 @@
   gap: var(--space-4);
 }
 
-.resume-modal-actions a,
-.resume-modal-actions button {
+.resume-modal-actions a {
   font-size: 0.85rem;
   color: var(--color-text-secondary);
   background: none;
@@ -64,8 +63,34 @@
   transition: color 0.15s ease;
 }
 
-.resume-modal-actions a:hover,
-.resume-modal-actions button:hover {
+.resume-modal-actions a:hover {
+  color: var(--color-text);
+}
+
+/* Explicit close/maximize actions, in addition to (now removed, see
+   hideDots) the traffic-light dots — matches the Pac-Man modal pattern. */
+.resume-modal-maximize,
+.resume-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.resume-modal-maximize:hover,
+.resume-modal-maximize:active,
+.resume-modal-close:hover,
+.resume-modal-close:active {
+  background: rgba(255, 255, 255, 0.14);
   color: var(--color-text);
 }
 
@@ -104,7 +129,7 @@
 
 @media (max-width: 640px) {
   .resume-modal-overlay {
-    padding: var(--space-3);
+    padding: var(--space-2);
   }
 
   .resume-modal {
@@ -112,9 +137,25 @@
   }
 
   .resume-modal-bar span {
-    max-width: 140px;
+    max-width: 120px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .resume-modal-bar {
+    padding: var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .resume-modal-actions {
+    gap: var(--space-2);
+  }
+
+  /* The 24px scroll padding plus the overlay/frame chrome was eating a
+     large share of a narrow phone screen, making the actual document look
+     tiny. Shrink it so the resume fills the available width properly. */
+  .resume-modal-scroll {
+    padding: var(--space-3);
   }
 }

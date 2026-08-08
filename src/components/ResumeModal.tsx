@@ -80,17 +80,24 @@ export default function ResumeModal({ onClose }: ResumeModalProps) {
         className={`resume-modal${maximized ? ' resume-modal-maximized' : ''}`}
         onClick={(event) => event.stopPropagation()}
       >
-        <WindowFrame
-          className="resume-modal-frame"
-          onClose={onClose}
-          onMaximize={() => setMaximized((m) => !m)}
-        >
+        <WindowFrame className="resume-modal-frame" hideDots>
           <div className="resume-modal-bar">
             <span>Rithwik_Lagishetty_Resume.pdf</span>
             <div className="resume-modal-actions">
               <a href="/resume.pdf" download>
                 Download ↓
               </a>
+              <button
+                type="button"
+                className="resume-modal-maximize"
+                onClick={() => setMaximized((m) => !m)}
+                aria-label={maximized ? 'Restore' : 'Maximize'}
+              >
+                {maximized ? '⤡' : '⤢'}
+              </button>
+              <button type="button" className="resume-modal-close" onClick={onClose} aria-label="Close">
+                ✕
+              </button>
             </div>
           </div>
           <div className="resume-modal-scroll">
