@@ -18,8 +18,8 @@ function isExperienceCaseStudy(path: string) {
 }
 
 const TABS = [
-  { to: '/', label: 'Work', match: (path: string) => path === '/' || isProjectCaseStudy(path) },
-  { to: '/info', label: 'Info', match: (path: string) => path.startsWith('/info') || isExperienceCaseStudy(path) },
+  { to: '/work', label: 'Work', match: (path: string) => path === '/work' || isProjectCaseStudy(path) },
+  { to: '/', label: 'Info', match: (path: string) => path === '/' || isExperienceCaseStudy(path) },
   { to: '/contact', label: 'Contact', match: (path: string) => path.startsWith('/contact') },
 ]
 

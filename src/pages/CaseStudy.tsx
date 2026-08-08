@@ -14,7 +14,7 @@ export default function CaseStudy() {
     return (
       <main className="case-study">
         <p className="case-not-found">
-          Couldn't find that one. <Link to="/">Back to work →</Link>
+          Couldn't find that one. <Link to="/work">Back to work →</Link>
         </p>
       </main>
     )
@@ -26,7 +26,7 @@ export default function CaseStudy() {
 
   return (
     <main className="case-study">
-      <Link to={entry.category === 'experience' ? '/info' : '/'} className="case-back">
+      <Link to={entry.category === 'experience' ? '/' : '/work'} className="case-back">
         ← Back to {entry.category === 'experience' ? 'info' : 'work'}
       </Link>
 

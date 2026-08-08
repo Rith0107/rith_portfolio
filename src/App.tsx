@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -33,9 +33,10 @@ function App() {
       <Nav />
       <div key={location.pathname} className="page-transition">
         <Routes location={location}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Info />} />
+          <Route path="/work" element={<Home />} />
           <Route path="/work/:slug" element={<CaseStudy />} />
-          <Route path="/info" element={<Info />} />
+          <Route path="/info" element={<Navigate to="/" replace />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
