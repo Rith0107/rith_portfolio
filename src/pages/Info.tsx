@@ -3,6 +3,7 @@ import { workEntries } from '../data/workEntries'
 import WindowFrame from '../components/WindowFrame'
 import { useScrollGlow } from '../hooks/useScrollGlow'
 import { useMediaQuery } from '../hooks/useMediaQuery'
+import { MEDIA } from '../styles/breakpoints'
 import './Info.css'
 
 const SKILLS: { category: string; items: string[] }[] = [
@@ -86,6 +87,25 @@ function PinIcon() {
   return (
     <svg className="pin-icon" viewBox="0 0 24 24" fill="currentColor" fillRule="evenodd">
       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 4.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" />
+    </svg>
+  )
+}
+
+// Hover highlights the row on desktop, but hover never fires on touch — this
+// arrow is the persistent cue (mirroring the one on work cards) that the row
+// itself is tappable.
+function RowArrowIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="experience-row-arrow"
+    >
+      <path d="M5 12h14M13 6l6 6-6 6" />
     </svg>
   )
 }
@@ -175,7 +195,7 @@ function SignOff() {
 
 export default function Info() {
   const experience = workEntries.filter((entry) => entry.category === 'experience')
-  const isDesktop = useMediaQuery('(min-width: 701px)')
+  const isDesktop = useMediaQuery(MEDIA.fromDesktop)
   const lastChapterIndex = CHAPTERS.length - 1
 
   useScrollGlow('.info-chapter-visual')
@@ -235,30 +255,33 @@ export default function Info() {
         <div className="experience-list">
           {experience.map((entry) => (
             <Link key={entry.slug} to={`/work/${entry.slug}`} className="experience-row">
-              <div className="experience-company-block">
-                <div className="experience-company">
-                  {entry.logo ? (
-                    entry.logoWithTitle ? (
-                      <>
-                        {entry.title}
-                        <img
-                          src={entry.logo}
-                          alt=""
-                          className="experience-logo experience-logo-inline"
-                          decoding="async"
-                        />
-                      </>
+              <div className="experience-row-top">
+                <div className="experience-company-block">
+                  <div className="experience-company">
+                    {entry.logo ? (
+                      entry.logoWithTitle ? (
+                        <>
+                          {entry.title}
+                          <img
+                            src={entry.logo}
+                            alt=""
+                            className="experience-logo experience-logo-inline"
+                            decoding="async"
+                          />
+                        </>
+                      ) : (
+                        <img src={entry.logo} alt={entry.title} className="experience-logo" decoding="async" />
+                      )
                     ) : (
-                      <img src={entry.logo} alt={entry.title} className="experience-logo" decoding="async" />
-                    )
-                  ) : (
-                    entry.title
-                  )}
+                      entry.title
+                    )}
+                  </div>
+                  <span className="experience-location">
+                    <PinIcon />
+                    {entry.location}
+                  </span>
                 </div>
-                <span className="experience-location">
-                  <PinIcon />
-                  {entry.location}
-                </span>
+                <RowArrowIcon />
               </div>
               <div className="experience-details">
                 {entry.roles ? (

@@ -138,7 +138,9 @@
   grid-row: 2;
 }
 
-@media (max-width: 600px) {
+/* Shown on narrow viewports (may be touch) and on any touch-capable pointer
+   regardless of width (a touch tablet/laptop in landscape still needs it). */
+@media (max-width: 640px), (hover: none) and (pointer: coarse) {
   .pacman-dpad {
     display: grid;
   }

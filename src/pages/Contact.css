@@ -208,7 +208,8 @@
   transition: opacity 0.15s ease;
 }
 
-.contact-submit:hover {
+.contact-submit:hover,
+.contact-submit:active:not(:disabled) {
   opacity: 0.85;
 }
 
@@ -245,11 +246,12 @@
 
 @media (max-width: 720px) {
   .contact {
-    padding: var(--space-6) var(--space-4) var(--space-8);
+    padding: var(--space-6) var(--space-4) var(--space-5);
   }
 
   .postcard {
     grid-template-columns: 1fr;
+    gap: var(--space-6);
     padding: 24px;
     transform: rotate(-0.6deg);
   }
@@ -258,8 +260,32 @@
     display: none;
   }
 
+  /* The stamp now anchors to the postcard's own top-right corner (below)
+     instead of the address column's, so give the greeting room to clear it
+     instead of running underneath it. */
+  .postcard-message {
+    gap: var(--space-2);
+    padding-top: 100px;
+  }
+
   .postcard-address {
-    padding-top: var(--space-8);
+    position: static;
+    gap: var(--space-3);
+    padding-top: 0;
+  }
+
+  .postcard-stamp {
+    /* Inset past the striped border (14px on mobile) plus breathing room —
+       top:0/right:0 sat flush against the stripe, visually colliding with it. */
+    top: 18px;
+    right: 18px;
+    width: 56px;
+    height: 68px;
+  }
+
+  .postcard-stamp-chakra {
+    width: 30px;
+    height: 30px;
   }
 
   .india-border-strip.edge-x {
@@ -268,5 +294,9 @@
 
   .india-border-strip.edge-y {
     width: 14px;
+  }
+
+  .contact-submit {
+    align-self: center;
   }
 }

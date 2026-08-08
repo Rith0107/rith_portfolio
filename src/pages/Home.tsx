@@ -18,7 +18,7 @@ export default function Home() {
         <div className="hero-frame-wrap">
           <WindowFrame className="hero-frame">
             <h1 className="hero-headline">
-              I build reliable systems & <span className="gradient-text">AI-powered tools</span>.
+              I build reliable systems & <span className="gradient-text">AI‑powered tools</span>.
             </h1>
             <div className="hero-bio-row">
               <div className="hero-bio-box">

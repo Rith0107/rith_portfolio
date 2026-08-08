@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import * as pdfjsLib from 'pdfjs-dist'
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.js?url'
 import WindowFrame from './WindowFrame'
+import { useScrollLock } from '../hooks/useScrollLock'
 import './ResumeModal.css'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker
@@ -15,6 +16,8 @@ export default function ResumeModal({ onClose }: ResumeModalProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [status, setStatus] = useState<'loading' | 'error' | 'ready'>('loading')
   const [maximized, setMaximized] = useState(false)
+
+  useScrollLock(true)
 
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {

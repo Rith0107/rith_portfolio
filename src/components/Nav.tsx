@@ -26,7 +26,9 @@ const TABS = [
 export default function Nav() {
   const [resumeOpen, setResumeOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
+  const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -34,6 +36,30 @@ export default function Nav() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Mobile "more links" menu (LinkedIn/Resume) — close on outside tap/click
+  // or Escape. pointerdown (not click) so it also closes cleanly on touch.
+  useEffect(() => {
+    if (!menuOpen) return
+    function handleOutside(event: PointerEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    document.addEventListener('pointerdown', handleOutside)
+    document.addEventListener('keydown', handleEscape)
+    return () => {
+      document.removeEventListener('pointerdown', handleOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [menuOpen])
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [location.pathname])
 
   const pillRef = useRef<HTMLElement>(null)
   const tabRefs = useRef<(HTMLAnchorElement | null)[]>([])
@@ -85,6 +111,8 @@ export default function Nav() {
               <NavLink
                 key={tab.to}
                 to={tab.to}
+                end
+                state={{ scrollToTop: true }}
                 ref={(el) => {
                   tabRefs.current[index] = el
                 }}
@@ -107,6 +135,42 @@ export default function Nav() {
           <button type="button" className="nav-external-button" onClick={() => setResumeOpen(true)}>
             Resume <span className="nav-external-arrow">↗</span>
           </button>
+        </div>
+
+        <div className="nav-menu" ref={menuRef}>
+          <button
+            type="button"
+            className="nav-menu-trigger"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label="More links"
+            aria-haspopup="true"
+            aria-expanded={menuOpen}
+          >
+            <span className="nav-menu-trigger-glyph">@</span>
+          </button>
+          {menuOpen && (
+            <div className="nav-menu-panel">
+              <a
+                href="https://www.linkedin.com/in/rithwik-lagishetty/"
+                target="_blank"
+                rel="noreferrer"
+                className="nav-menu-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                LinkedIn <span className="nav-external-arrow">↗</span>
+              </a>
+              <button
+                type="button"
+                className="nav-menu-item"
+                onClick={() => {
+                  setMenuOpen(false)
+                  setResumeOpen(true)
+                }}
+              >
+                Resume <span className="nav-external-arrow">↗</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

@@ -1,3 +1,7 @@
+/* Mobile/desktop split: 640px (mirrored in src/styles/breakpoints.ts for
+   JS/hook use — CSS media queries can't reference custom properties, so this
+   value is hand-copied into every @media rule; keep both in sync). */
+
 :root {
   color-scheme: dark;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
