@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import WindowFrame from './WindowFrame'
 import PacmanGame from './PacmanGame'
+import { useScrollLock } from '../hooks/useScrollLock'
 import './PacmanModal.css'
 
 interface PacmanModalProps {
@@ -9,6 +10,8 @@ interface PacmanModalProps {
 }
 
 export default function PacmanModal({ onClose }: PacmanModalProps) {
+  useScrollLock(true)
+
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose()

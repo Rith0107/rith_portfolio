@@ -77,9 +77,12 @@
   gap: var(--space-8);
 }
 
+/* Only ever rendered below the mobile breakpoint (the desktop branch uses
+   .info-chapters-columns instead), so this stacks unconditionally rather
+   than needing its own separate breakpoint. */
 .info-chapter-row {
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 1fr;
   gap: var(--space-7);
   align-items: start;
 }
@@ -199,12 +202,6 @@
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.4));
 }
 
-@media (max-width: 700px) {
-  .info-chapter-row {
-    grid-template-columns: 1fr;
-  }
-}
-
 .experience-list {
   display: flex;
   flex-direction: column;
@@ -221,7 +218,8 @@
   transition: background 0.15s ease;
 }
 
-.experience-row:hover {
+.experience-row:hover,
+.experience-row:active {
   background: var(--color-bg-elevated);
 }
 
@@ -391,7 +389,7 @@ p.experience-body {
   color: rgba(242, 242, 243, 0.6);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .experience-row {
     grid-template-columns: 1fr;
     gap: var(--space-3);
@@ -438,7 +436,7 @@ p.experience-body {
   color: rgba(242, 242, 243, 0.85);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .info {
     padding: var(--space-6) var(--space-4) var(--space-8);
   }

@@ -102,7 +102,7 @@
   text-decoration: underline;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .resume-modal-overlay {
     padding: var(--space-3);
   }

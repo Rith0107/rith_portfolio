@@ -176,7 +176,8 @@
   transition: opacity 0.15s ease;
 }
 
-.case-next:hover {
+.case-next:hover,
+.case-next:active {
   opacity: 0.6;
 }
 

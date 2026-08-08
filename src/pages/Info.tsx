@@ -3,6 +3,7 @@ import { workEntries } from '../data/workEntries'
 import WindowFrame from '../components/WindowFrame'
 import { useScrollGlow } from '../hooks/useScrollGlow'
 import { useMediaQuery } from '../hooks/useMediaQuery'
+import { MEDIA } from '../styles/breakpoints'
 import './Info.css'
 
 const SKILLS: { category: string; items: string[] }[] = [
@@ -175,7 +176,7 @@ function SignOff() {
 
 export default function Info() {
   const experience = workEntries.filter((entry) => entry.category === 'experience')
-  const isDesktop = useMediaQuery('(min-width: 701px)')
+  const isDesktop = useMediaQuery(MEDIA.fromDesktop)
   const lastChapterIndex = CHAPTERS.length - 1
 
   useScrollGlow('.info-chapter-visual')

@@ -3,13 +3,17 @@
   top: 0;
   z-index: 10;
   background: transparent;
-  backdrop-filter: none;
-  transition: background-color 0.25s ease, backdrop-filter 0.25s ease;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .nav.nav-scrolled {
-  background: rgba(10, 10, 11, 0.75);
-  backdrop-filter: blur(12px);
+  /* Fully opaque, not translucent: a partial-alpha backdrop let
+     high-contrast scrolled content (bold headlines, the contact page's
+     striped postcard border) visibly ghost through and collide with the
+     nav's own text. Solid is the only fix that's robust to arbitrary
+     content scrolling underneath. */
+  background: var(--color-bg);
+  box-shadow: 0 1px 0 var(--color-border);
 }
 
 .nav-inner {
@@ -131,11 +135,39 @@
   display: inline-block;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
+  /* Deliberate 2-row layout: identity + external links share row 1
+     (space-between, like desktop), the pill takes the full-width row 2,
+     centered — instead of an unplanned 3-row wrap with dead space. */
   .nav-inner {
     flex-wrap: wrap;
     padding: var(--space-3) var(--space-4);
-    gap: var(--space-2);
+    row-gap: var(--space-3);
+    column-gap: var(--space-3);
+  }
+
+  .nav-identity {
+    order: 1;
+  }
+
+  .nav-external {
+    order: 2;
+  }
+
+  .nav-pill-wrapper {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .nav-pill {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-pill-link {
+    flex: 1;
+    padding: 11px 0;
+    font-size: 0.88rem;
   }
 
   .nav-title {
@@ -143,19 +175,10 @@
   }
 
   .nav-name {
-    font-size: 0.85rem;
-  }
-
-  .nav-pill-link {
-    width: 74px;
-    padding: 11px 0;
-    font-size: 0.82rem;
+    font-size: 0.9rem;
   }
 
   .nav-external {
-    order: 3;
-    flex-basis: 100%;
-    justify-content: flex-end;
     gap: var(--space-4);
   }
 

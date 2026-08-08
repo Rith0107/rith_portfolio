@@ -208,7 +208,8 @@
   transition: opacity 0.15s ease;
 }
 
-.contact-submit:hover {
+.contact-submit:hover,
+.contact-submit:active:not(:disabled) {
   opacity: 0.85;
 }
 
@@ -245,11 +246,12 @@
 
 @media (max-width: 720px) {
   .contact {
-    padding: var(--space-6) var(--space-4) var(--space-8);
+    padding: var(--space-6) var(--space-4) var(--space-7);
   }
 
   .postcard {
     grid-template-columns: 1fr;
+    gap: var(--space-6);
     padding: 24px;
     transform: rotate(-0.6deg);
   }
@@ -258,8 +260,23 @@
     display: none;
   }
 
+  .postcard-message {
+    gap: var(--space-2);
+  }
+
   .postcard-address {
-    padding-top: var(--space-8);
+    gap: var(--space-3);
+    padding-top: var(--space-7);
+  }
+
+  .postcard-stamp {
+    width: 56px;
+    height: 68px;
+  }
+
+  .postcard-stamp-chakra {
+    width: 30px;
+    height: 30px;
   }
 
   .india-border-strip.edge-x {
