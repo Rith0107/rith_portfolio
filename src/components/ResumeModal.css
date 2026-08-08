@@ -158,4 +158,18 @@
   .resume-modal-scroll {
     padding: var(--space-3);
   }
+
+  /* A fixed 88vh height left a large dead strip of the scroll area's gray
+     canvas background below a one-page resume that doesn't need that much
+     room. Size to content instead, capped at the same ceiling — short
+     documents shrink to fit, long ones still cap and scroll normally. */
+  .resume-modal {
+    height: auto;
+    max-height: min(88vh, 900px);
+  }
+
+  .resume-modal-maximized {
+    height: auto;
+    max-height: 95vh;
+  }
 }
