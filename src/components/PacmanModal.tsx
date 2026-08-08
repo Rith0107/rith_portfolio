@@ -26,6 +26,14 @@ export default function PacmanModal({ onClose }: PacmanModalProps) {
         <WindowFrame className="pacman-modal-frame" onClose={onClose}>
           <div className="pacman-modal-bar">
             <span className="pacman-modal-title">Pacman</span>
+            <button
+              type="button"
+              className="pacman-modal-close"
+              onClick={onClose}
+              aria-label="Close"
+            >
+              ✕
+            </button>
           </div>
           <PacmanGame />
         </WindowFrame>

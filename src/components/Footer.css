@@ -4,6 +4,15 @@
   margin-top: var(--space-9);
 }
 
+@media (max-width: 640px) {
+  /* Every page already ends with its own bottom padding/section spacing;
+     stacking the full desktop margin-top on top of that on a short mobile
+     viewport reads as a dead gap before the footer. */
+  .footer {
+    margin-top: var(--space-6);
+  }
+}
+
 .footer-cars {
   position: absolute;
   top: 0;
@@ -26,7 +35,7 @@
   transform: translateY(-2px);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .footer-cars {
     right: var(--space-4);
   }
@@ -77,11 +86,16 @@
   color: var(--color-text-muted);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .footer-inner {
     padding: var(--space-5) var(--space-4);
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-3);
+  }
+
+  .footer-copyright {
+    align-self: center;
+    text-align: center;
   }
 }

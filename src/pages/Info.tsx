@@ -91,6 +91,25 @@ function PinIcon() {
   )
 }
 
+// Hover highlights the row on desktop, but hover never fires on touch — this
+// arrow is the persistent cue (mirroring the one on work cards) that the row
+// itself is tappable.
+function RowArrowIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="experience-row-arrow"
+    >
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  )
+}
+
 interface Chapter {
   title: string
   text: string
@@ -281,6 +300,7 @@ export default function Info() {
                 )}
                 <p className="experience-body">{entry.oneLiner}</p>
               </div>
+              <RowArrowIcon />
             </Link>
           ))}
         </div>

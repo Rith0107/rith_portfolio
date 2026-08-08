@@ -199,8 +199,15 @@
   color: var(--color-text-secondary);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .case-study {
-    padding: var(--space-6) var(--space-4) var(--space-8);
+    /* Less bottom padding than desktop — .case-next already adds its own
+       margin-top + border-top separation, and the footer adds more on top
+       of that, so full desktop padding here reads as a dead gap. */
+    padding: var(--space-6) var(--space-4) var(--space-5);
+  }
+
+  .case-next {
+    margin-top: var(--space-7);
   }
 }

@@ -209,10 +209,11 @@
 }
 
 .experience-row {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-3) var(--space-7);
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-4) calc(var(--space-5) + 28px) var(--space-4) var(--space-5);
   margin: 0 calc(var(--space-5) * -1);
   border-radius: var(--radius-md);
   transition: background 0.15s ease;
@@ -221,6 +222,24 @@
 .experience-row:hover,
 .experience-row:active {
   background: var(--color-bg-elevated);
+}
+
+/* Persistent tap/click affordance — see RowArrowIcon comment in Info.tsx. */
+.experience-row-arrow {
+  position: absolute;
+  top: 50%;
+  right: var(--space-5);
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-muted);
+  transition: color 0.15s ease, transform 0.2s ease;
+}
+
+.experience-row:hover .experience-row-arrow,
+.experience-row:active .experience-row-arrow {
+  color: var(--color-text);
+  transform: translateY(-50%) translateX(3px);
 }
 
 .edu-cards {

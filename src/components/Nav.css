@@ -135,6 +135,75 @@
   display: inline-block;
 }
 
+/* Mobile-only "more links" menu — collapses LinkedIn/Resume behind a single
+   trigger so row 1 has room to keep the "Software Engineer" subtitle. */
+.nav-menu {
+  display: none;
+  position: relative;
+}
+
+.nav-menu-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.nav-menu-trigger svg {
+  width: 16px;
+  height: 16px;
+}
+
+.nav-menu-trigger:hover,
+.nav-menu-trigger[aria-expanded='true'] {
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+}
+
+.nav-menu-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 168px;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-window);
+}
+
+.nav-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.nav-menu-item:hover,
+.nav-menu-item:active {
+  background: var(--color-bg-elevated-2);
+}
+
 @media (max-width: 640px) {
   /* Deliberate 2-row layout: identity + external links share row 1
      (space-between, like desktop), the pill takes the full-width row 2,
@@ -170,21 +239,18 @@
     font-size: 0.88rem;
   }
 
-  .nav-title {
-    display: none;
-  }
-
   .nav-name {
     font-size: 0.9rem;
   }
 
+  /* LinkedIn/Resume collapse into .nav-menu below, freeing row 1 to keep
+     the "Software Engineer" subtitle visible under the name. */
   .nav-external {
-    gap: var(--space-4);
+    display: none;
   }
 
-  .nav-external a,
-  .nav-external-button {
-    padding: 9px 0;
-    font-size: 0.82rem;
+  .nav-menu {
+    display: block;
+    order: 2;
   }
 }

@@ -20,6 +20,7 @@
 }
 
 .pacman-modal-bar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,6 +32,35 @@
   font-family: 'Press Start 2P', monospace;
   font-size: 0.9rem;
   letter-spacing: 0.05em;
+  color: var(--color-text);
+}
+
+/* An explicit close action, in addition to the traffic-light dot — the dot
+   alone isn't a discoverable "close" affordance for anyone unfamiliar with
+   macOS window chrome, which is most people on a touch device. */
+.pacman-modal-close {
+  position: absolute;
+  top: 50%;
+  right: var(--space-4);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pacman-modal-close:hover,
+.pacman-modal-close:active {
+  background: rgba(255, 255, 255, 0.14);
   color: var(--color-text);
 }
 
