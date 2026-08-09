@@ -232,8 +232,12 @@
   gap: var(--space-3);
 }
 
-/* Persistent tap/click affordance — see RowArrowIcon comment in Info.tsx. */
+/* Persistent tap affordance for touch, where :hover never fires — see
+   RowArrowIcon comment in Info.tsx. Desktop already has the row's :hover
+   background as its clickability cue, so the arrow only shows on mobile
+   (below). */
 .experience-row-arrow {
+  display: none;
   flex-shrink: 0;
   width: 18px;
   height: 18px;
@@ -417,6 +421,10 @@ p.experience-body {
   .experience-row {
     grid-template-columns: 1fr;
     gap: var(--space-3);
+  }
+
+  .experience-row-arrow {
+    display: block;
   }
 }
 
