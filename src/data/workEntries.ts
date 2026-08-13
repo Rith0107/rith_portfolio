@@ -10,6 +10,7 @@ export interface WorkEntry {
   logo?: string
   logoWithTitle?: boolean
   image?: string
+  liveUrl?: string
   oneLiner: string
   overview: string
   context?: string
@@ -156,6 +157,108 @@ export const workEntries: WorkEntry[] = [
       'This role showed me how much technical decisions are shaped by market context — a lesson that has stuck with me in every engineering role since.',
   },
   {
+    slug: 'aduvia',
+    title: 'Aduvia',
+    role: 'Personal Project',
+    period: 'August 2026 – Present',
+    location: 'Self-directed',
+    category: 'project',
+    accent: '#3d7a5c',
+    image: '/projects/aduvia.svg',
+    liveUrl: 'https://aduvia-chi.vercel.app',
+    oneLiner:
+      'A daily-habit and monthly side-quest tracker built around honest progress instead of streaks — Next.js, TypeScript, Supabase.',
+    overview:
+      'Aduvia is a daily-routine and monthly side-quest tracker that combines fast habit check-ins, meaningful personal goals, and analytics that explain consistency, effort, and momentum instead of just counting streaks. The name blends the Telugu adugu (“step”) with “via” — a path shaped one step at a time. Built with Next.js, TypeScript, Tailwind CSS, and Supabase, with GitHub as the source of truth and CI running typecheck, lint, tests, and the production build on every push.',
+    context:
+      'Most habit trackers overemphasize streaks and binary completion: a single missed day erases weeks of consistency, recurring habits and one-time personal goals get treated as the same kind of thing, and charts get shown without any real interpretation. I wanted to write a product requirements doc first, define what “honest progress” actually means as a formula, and then build toward that — not start from a checklist UI and back into the metrics later.',
+    problem: [
+      'Streak-based tracking punishes a single missed day by erasing all prior consistency, which discourages the honest, imperfect follow-through the app is supposed to encourage.',
+      'Recurring daily habits and one-time monthly goals have fundamentally different completion semantics, but most trackers force them into the same data model.',
+      'Low-effort, low-priority tasks shouldn’t be able to outweigh an incomplete high-impact commitment just because they’re easier to check off.',
+    ],
+    process: [
+      'Wrote a full product requirements doc before writing application code — core loop (Plan → Act → Check in → Review → Adjust), product principles, and every MVP screen’s exact capabilities.',
+      'Defined the metrics as real formulas up front rather than picking whatever a charting library made easy: consistency as completed-over-scheduled occurrences with proportional partial credit, routine efficiency as a priority-weighted completion score, and momentum as a 70/30-weighted blend of the last two 7-day windows.',
+      'Built the app on Next.js, TypeScript, Tailwind CSS, and Supabase, with authenticated accounts persisting habits, schedules, check-ins, side quests, and private reflections — and an unconfigured local environment falling back to browser-local preview data.',
+      'Set up GitHub Actions to run typecheck, lint, tests, and the production build on every push and pull request, and wrote out architecture-decision records and a design system doc alongside the code.',
+      'Deployed to Vercel connected to the production Supabase project, with a launch checklist covering row-level security verification across two independent accounts and the signup/password-recovery flows.',
+    ],
+    outcome: [
+      'Shipped and deployed a working product across all four MVP areas — Today, Habits, Side Quests, and Insights — not just a prototype.',
+      'CI (typecheck, lint, tests, build) runs green on every push, with documented PRD, architecture decisions, and design system backing the codebase.',
+      'Working through the pre-launch checklist — row-level security verification and auth-flow testing — before opening it up publicly.',
+    ],
+    retrospective:
+      'Writing the PRD and the metric formulas before touching the UI meant the hard product decisions — what "honest progress" actually means, mathematically — were already settled by the time I was writing components, instead of getting quietly decided by whatever a charting library made convenient.',
+  },
+  {
+    slug: 'handwriting-font',
+    title: 'A Font Made From My Handwriting',
+    role: 'Personal Project',
+    period: 'July 2026 – Present',
+    location: 'Self-directed',
+    category: 'project',
+    accent: '#a78bfa',
+    image: '/projects/handwriting-font.svg',
+    oneLiner:
+      'Turning my own handwriting into a real, installable typeface — currently in progress, in its own repo.',
+    overview:
+      'An ongoing project to design a custom font from my own handwriting, distributable as a real TTF/OTF file rather than a font-generator novelty. I built a printable glyph-template tool to capture every character consistently, and I’m taking it through Calligraphr to produce the final font files.',
+    context:
+      'I wanted a typeface that’s actually mine — not another Google Fonts pick everyone else’s site also uses — and was curious whether turning handwriting into a real, installable font was something I could realistically do myself, end to end.',
+    problem: [
+      'Font tools generally expect either one full scanned sheet in their own template format, or individually cropped images per glyph — neither of which I had a way to produce yet.',
+      'Getting consistent letterforms across 80-plus characters (uppercase, lowercase, digits, punctuation) needed a shared baseline and frame per glyph, not loose handwriting on blank paper.',
+      'Needed to decide up front between fully-automatic template tools (fast, less control) and manual per-glyph tools like FontForge (slower, more control) before committing to a workflow.',
+    ],
+    process: [
+      'Built a printable HTML template with a labeled box for every uppercase and lowercase letter, digit, and common punctuation mark, plus instructions for pen and scan quality, published for printing.',
+      'Caught and fixed a real bug during review — the quote-mark glyph box was rendering the literal text “&quot;” instead of an actual quote character, since the label logic read it through `textContent` without decoding the HTML entity.',
+      'Compared font-creation workflows — Calligraphr’s automatic template versus its manual custom-upload flow, FontForge, Glyphs, and Fontself Maker — and settled on Calligraphr’s manual upload path, since I designed my own template instead of using theirs.',
+      'Set up a separate git repository for the project (kept deliberately out of the portfolio repo), and pushed it to a private GitHub repo.',
+    ],
+    outcome: [
+      'Template tool built, reviewed, and published; workflow chosen; repo live on GitHub (private, for now).',
+      'Next: print the template, write and scan every glyph, build the font in Calligraphr, and export the TTF/OTF.',
+    ],
+    retrospective:
+      'Catching the escaped quote-mark bug before printing was a good reminder that a template you’re about to fill in by hand, one character at a time, is expensive to redo — worth double-checking every glyph box renders exactly right before a single pen touches paper.',
+  },
+  {
+    slug: 'this-portfolio',
+    title: 'My Portfolio',
+    role: 'Personal Project',
+    period: '2026',
+    location: 'Self-directed',
+    category: 'project',
+    accent: '#4fd1c5',
+    image: '/projects/this-portfolio.svg',
+    oneLiner:
+      'A from-scratch React and TypeScript portfolio, including a custom image-processing pipeline for every logo, seal, and signature on it.',
+    overview:
+      'Built this site itself as a React, TypeScript, and Vite single-page app with a shared dark, monochrome design system, and wrote a from-scratch Python and Pillow image pipeline to turn photographed company logos, a university seal, and my own handwritten signature into clean assets without any design software.',
+    context:
+      'I wanted a portfolio that felt personally authored rather than a template with my name swapped in — real photos, my real signature, and project visuals grounded in my actual reports, instead of stock icons and lorem-ipsum placeholders.',
+    problem: [
+      'Every logo I had access to — company logos, a university seal, my own signature — only existed as low-resolution photos with visible paper texture and uneven lighting, not clean vector assets.',
+      'I had no access to Photoshop or any paid image-editing tool, and no existing background-removal service I wanted to depend on.',
+      'The site needed one consistent visual language — window chrome, browser-style mockups, a shared spacing and color system — reused across a hero, case studies, and a terminal-style skills list without duplicating styles.',
+    ],
+    process: [
+      'Set up the site as a React + TypeScript + Vite SPA with React Router, using CSS custom properties for a shared design system (color tokens, spacing scale, shared radii and shadows) instead of a component library.',
+      'Wrote an image-processing pipeline in Python with Pillow and scipy from scratch — chroma-keying by color distance from a sampled background, flood-fill to separate enclosed ink from background on a university seal, median-filter despeckling, and connected-component analysis to strip noise — to turn photographed logos and my signature into clean transparent PNGs.',
+      'Iterated the site favicon the same way: processed a photographed hand-drawn monogram down to a raster mark, found it illegible at actual browser-tab size, and replaced it with a simplified two-letter wordmark rendered directly at the target sizes.',
+      'Built a reusable window-chrome component for the macOS-style frames used throughout the site, and separately hand-built browser-chrome SVG mockups (tabs, address bar, toolbar) for each project case study.',
+      'Added a scroll-driven interaction on the About page — a light reflection across each photo frame that shifts position based on the frame’s location in the viewport as you scroll.',
+    ],
+    outcome: [
+      'Shipped a fully custom portfolio with no template underneath it — every logo, seal, signature, project mockup, and favicon on the site was processed or designed specifically for it.',
+    ],
+    retrospective:
+      'Processing my own photographed logos and signature by hand, instead of grabbing stock icons, is what actually makes the site feel like mine rather than a template with my name swapped in.',
+  },
+  {
     slug: 'disaster-recognition',
     title: 'Disaster Recognition from Aerial Images',
     role: 'Academic Project',
@@ -255,107 +358,6 @@ export const workEntries: WorkEntry[] = [
     ],
     retrospective:
       'The most useful engineering decision here wasn’t one that made it into the final pipeline — it was dropping cosine similarity after testing showed it didn’t earn its cost. Measuring whether an addition actually helps, and cutting it when it doesn’t, mattered more than stacking on another technique.',
-  },
-  {
-    slug: 'this-portfolio',
-    title: 'My Portfolio',
-    role: 'Personal Project',
-    period: '2026',
-    location: 'Self-directed',
-    category: 'project',
-    accent: '#4fd1c5',
-    image: '/projects/this-portfolio.svg',
-    oneLiner:
-      'A from-scratch React and TypeScript portfolio, including a custom image-processing pipeline for every logo, seal, and signature on it.',
-    overview:
-      'Built this site itself as a React, TypeScript, and Vite single-page app with a shared dark, monochrome design system, and wrote a from-scratch Python and Pillow image pipeline to turn photographed company logos, a university seal, and my own handwritten signature into clean assets without any design software.',
-    context:
-      'I wanted a portfolio that felt personally authored rather than a template with my name swapped in — real photos, my real signature, and project visuals grounded in my actual reports, instead of stock icons and lorem-ipsum placeholders.',
-    problem: [
-      'Every logo I had access to — company logos, a university seal, my own signature — only existed as low-resolution photos with visible paper texture and uneven lighting, not clean vector assets.',
-      'I had no access to Photoshop or any paid image-editing tool, and no existing background-removal service I wanted to depend on.',
-      'The site needed one consistent visual language — window chrome, browser-style mockups, a shared spacing and color system — reused across a hero, case studies, and a terminal-style skills list without duplicating styles.',
-    ],
-    process: [
-      'Set up the site as a React + TypeScript + Vite SPA with React Router, using CSS custom properties for a shared design system (color tokens, spacing scale, shared radii and shadows) instead of a component library.',
-      'Wrote an image-processing pipeline in Python with Pillow and scipy from scratch — chroma-keying by color distance from a sampled background, flood-fill to separate enclosed ink from background on a university seal, median-filter despeckling, and connected-component analysis to strip noise — to turn photographed logos and my signature into clean transparent PNGs.',
-      'Iterated the site favicon the same way: processed a photographed hand-drawn monogram down to a raster mark, found it illegible at actual browser-tab size, and replaced it with a simplified two-letter wordmark rendered directly at the target sizes.',
-      'Built a reusable window-chrome component for the macOS-style frames used throughout the site, and separately hand-built browser-chrome SVG mockups (tabs, address bar, toolbar) for each project case study.',
-      'Added a scroll-driven interaction on the About page — a light reflection across each photo frame that shifts position based on the frame’s location in the viewport as you scroll.',
-    ],
-    outcome: [
-      'Shipped a fully custom portfolio with no template underneath it — every logo, seal, signature, project mockup, and favicon on the site was processed or designed specifically for it.',
-    ],
-    retrospective:
-      'Processing my own photographed logos and signature by hand, instead of grabbing stock icons, is what actually makes the site feel like mine rather than a template with my name swapped in.',
-  },
-  {
-    slug: 'handwriting-font',
-    title: 'A Font Made From My Handwriting',
-    role: 'Personal Project',
-    period: 'July 2026 – Present',
-    location: 'Self-directed',
-    category: 'project',
-    accent: '#a78bfa',
-    image: '/projects/handwriting-font.svg',
-    oneLiner:
-      'Turning my own handwriting into a real, installable typeface — currently in progress, in its own repo.',
-    overview:
-      'An ongoing project to design a custom font from my own handwriting, distributable as a real TTF/OTF file rather than a font-generator novelty. I built a printable glyph-template tool to capture every character consistently, and I’m taking it through Calligraphr to produce the final font files.',
-    context:
-      'I wanted a typeface that’s actually mine — not another Google Fonts pick everyone else’s site also uses — and was curious whether turning handwriting into a real, installable font was something I could realistically do myself, end to end.',
-    problem: [
-      'Font tools generally expect either one full scanned sheet in their own template format, or individually cropped images per glyph — neither of which I had a way to produce yet.',
-      'Getting consistent letterforms across 80-plus characters (uppercase, lowercase, digits, punctuation) needed a shared baseline and frame per glyph, not loose handwriting on blank paper.',
-      'Needed to decide up front between fully-automatic template tools (fast, less control) and manual per-glyph tools like FontForge (slower, more control) before committing to a workflow.',
-    ],
-    process: [
-      'Built a printable HTML template with a labeled box for every uppercase and lowercase letter, digit, and common punctuation mark, plus instructions for pen and scan quality, published for printing.',
-      'Caught and fixed a real bug during review — the quote-mark glyph box was rendering the literal text “&quot;” instead of an actual quote character, since the label logic read it through `textContent` without decoding the HTML entity.',
-      'Compared font-creation workflows — Calligraphr’s automatic template versus its manual custom-upload flow, FontForge, Glyphs, and Fontself Maker — and settled on Calligraphr’s manual upload path, since I designed my own template instead of using theirs.',
-      'Set up a separate git repository for the project (kept deliberately out of the portfolio repo), and pushed it to a private GitHub repo.',
-    ],
-    outcome: [
-      'Template tool built, reviewed, and published; workflow chosen; repo live on GitHub (private, for now).',
-      'Next: print the template, write and scan every glyph, build the font in Calligraphr, and export the TTF/OTF.',
-    ],
-    retrospective:
-      'Catching the escaped quote-mark bug before printing was a good reminder that a template you’re about to fill in by hand, one character at a time, is expensive to redo — worth double-checking every glyph box renders exactly right before a single pen touches paper.',
-  },
-  {
-    slug: 'aduvia',
-    title: 'Aduvia',
-    role: 'Personal Project',
-    period: 'August 2026 – Present',
-    location: 'Self-directed',
-    category: 'project',
-    accent: '#3d7a5c',
-    image: '/projects/aduvia.svg',
-    oneLiner:
-      'A daily-habit and monthly side-quest tracker built around honest progress instead of streaks — Next.js, TypeScript, Supabase.',
-    overview:
-      'Aduvia is a daily-routine and monthly side-quest tracker that combines fast habit check-ins, meaningful personal goals, and analytics that explain consistency, effort, and momentum instead of just counting streaks. The name blends the Telugu adugu (“step”) with “via” — a path shaped one step at a time. Built with Next.js, TypeScript, Tailwind CSS, and Supabase, with GitHub as the source of truth and CI running typecheck, lint, tests, and the production build on every push.',
-    context:
-      'Most habit trackers overemphasize streaks and binary completion: a single missed day erases weeks of consistency, recurring habits and one-time personal goals get treated as the same kind of thing, and charts get shown without any real interpretation. I wanted to write a product requirements doc first, define what “honest progress” actually means as a formula, and then build toward that — not start from a checklist UI and back into the metrics later.',
-    problem: [
-      'Streak-based tracking punishes a single missed day by erasing all prior consistency, which discourages the honest, imperfect follow-through the app is supposed to encourage.',
-      'Recurring daily habits and one-time monthly goals have fundamentally different completion semantics, but most trackers force them into the same data model.',
-      'Low-effort, low-priority tasks shouldn’t be able to outweigh an incomplete high-impact commitment just because they’re easier to check off.',
-    ],
-    process: [
-      'Wrote a full product requirements doc before writing application code — core loop (Plan → Act → Check in → Review → Adjust), product principles, and every MVP screen’s exact capabilities.',
-      'Defined the metrics as real formulas up front rather than picking whatever a charting library made easy: consistency as completed-over-scheduled occurrences with proportional partial credit, routine efficiency as a priority-weighted completion score, and momentum as a 70/30-weighted blend of the last two 7-day windows.',
-      'Built the app on Next.js, TypeScript, Tailwind CSS, and Supabase, with authenticated accounts persisting habits, schedules, check-ins, side quests, and private reflections — and an unconfigured local environment falling back to browser-local preview data.',
-      'Set up GitHub Actions to run typecheck, lint, tests, and the production build on every push and pull request, and wrote out architecture-decision records and a design system doc alongside the code.',
-      'Deployed to Vercel connected to the production Supabase project, with a launch checklist covering row-level security verification across two independent accounts and the signup/password-recovery flows.',
-    ],
-    outcome: [
-      'Shipped and deployed a working product across all four MVP areas — Today, Habits, Side Quests, and Insights — not just a prototype.',
-      'CI (typecheck, lint, tests, build) runs green on every push, with documented PRD, architecture decisions, and design system backing the codebase.',
-      'Working through the pre-launch checklist — row-level security verification and auth-flow testing — before opening it up publicly.',
-    ],
-    retrospective:
-      'Writing the PRD and the metric formulas before touching the UI meant the hard product decisions — what "honest progress" actually means, mathematically — were already settled by the time I was writing components, instead of getting quietly decided by whatever a charting library made convenient.',
   },
 ]
 

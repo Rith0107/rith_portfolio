@@ -45,6 +45,11 @@ export default function CaseStudy() {
           <h1>{entry.title}</h1>
         )}
         <p className="case-oneliner">{entry.oneLiner}</p>
+        {entry.liveUrl && (
+          <a href={entry.liveUrl} target="_blank" rel="noreferrer" className="case-live-link">
+            Visit site <span className="case-live-link-arrow">↗</span>
+          </a>
+        )}
       </header>
 
       {entry.image && (
