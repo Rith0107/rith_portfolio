@@ -322,6 +322,41 @@ export const workEntries: WorkEntry[] = [
     retrospective:
       'Catching the escaped quote-mark bug before printing was a good reminder that a template you’re about to fill in by hand, one character at a time, is expensive to redo — worth double-checking every glyph box renders exactly right before a single pen touches paper.',
   },
+  {
+    slug: 'aduvia',
+    title: 'Aduvia',
+    role: 'Personal Project',
+    period: 'August 2026 – Present',
+    location: 'Self-directed',
+    category: 'project',
+    accent: '#3d7a5c',
+    image: '/projects/aduvia.svg',
+    oneLiner:
+      'A daily-habit and monthly side-quest tracker built around honest progress instead of streaks — Next.js, TypeScript, Supabase.',
+    overview:
+      'Aduvia is a daily-routine and monthly side-quest tracker that combines fast habit check-ins, meaningful personal goals, and analytics that explain consistency, effort, and momentum instead of just counting streaks. The name blends the Telugu adugu (“step”) with “via” — a path shaped one step at a time. Built with Next.js, TypeScript, Tailwind CSS, and Supabase, with GitHub as the source of truth and CI running typecheck, lint, tests, and the production build on every push.',
+    context:
+      'Most habit trackers overemphasize streaks and binary completion: a single missed day erases weeks of consistency, recurring habits and one-time personal goals get treated as the same kind of thing, and charts get shown without any real interpretation. I wanted to write a product requirements doc first, define what “honest progress” actually means as a formula, and then build toward that — not start from a checklist UI and back into the metrics later.',
+    problem: [
+      'Streak-based tracking punishes a single missed day by erasing all prior consistency, which discourages the honest, imperfect follow-through the app is supposed to encourage.',
+      'Recurring daily habits and one-time monthly goals have fundamentally different completion semantics, but most trackers force them into the same data model.',
+      'Low-effort, low-priority tasks shouldn’t be able to outweigh an incomplete high-impact commitment just because they’re easier to check off.',
+    ],
+    process: [
+      'Wrote a full product requirements doc before writing application code — core loop (Plan → Act → Check in → Review → Adjust), product principles, and every MVP screen’s exact capabilities.',
+      'Defined the metrics as real formulas up front rather than picking whatever a charting library made easy: consistency as completed-over-scheduled occurrences with proportional partial credit, routine efficiency as a priority-weighted completion score, and momentum as a 70/30-weighted blend of the last two 7-day windows.',
+      'Built the app on Next.js, TypeScript, Tailwind CSS, and Supabase, with authenticated accounts persisting habits, schedules, check-ins, side quests, and private reflections — and an unconfigured local environment falling back to browser-local preview data.',
+      'Set up GitHub Actions to run typecheck, lint, tests, and the production build on every push and pull request, and wrote out architecture-decision records and a design system doc alongside the code.',
+      'Deployed to Vercel connected to the production Supabase project, with a launch checklist covering row-level security verification across two independent accounts and the signup/password-recovery flows.',
+    ],
+    outcome: [
+      'Shipped and deployed a working product across all four MVP areas — Today, Habits, Side Quests, and Insights — not just a prototype.',
+      'CI (typecheck, lint, tests, build) runs green on every push, with documented PRD, architecture decisions, and design system backing the codebase.',
+      'Working through the pre-launch checklist — row-level security verification and auth-flow testing — before opening it up publicly.',
+    ],
+    retrospective:
+      'Writing the PRD and the metric formulas before touching the UI meant the hard product decisions — what "honest progress" actually means, mathematically — were already settled by the time I was writing components, instead of getting quietly decided by whatever a charting library made convenient.',
+  },
 ]
 
 export function getWorkEntry(slug: string) {
